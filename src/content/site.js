@@ -2,7 +2,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  *  SINGLE SOURCE OF CONTENT
  * ─────────────────────────────────────────────────────────────────────────────
- *  All site copy lives here, in PT and EN. No component has hardcoded copy:
+ *  All site copy lives here, in PT and EN. No template has hardcoded copy:
  *  to change the site, change this file.
  *
  *  CONTENT PROVENANCE
@@ -13,47 +13,53 @@
  *   ✔ YellowJobs and Moosy: product facts from yellowjobs.com.br and
  *     moosy.app (read on 2026-09-02); engineering narrative from Robson.
  * ─────────────────────────────────────────────────────────────────────────────
+ *
+ *  SHAPES  ·  every user-facing string is `{ pt, en }`.
+ *
+ *  @typedef {'pt'|'en'} Lang
+ *  @typedef {Record<Lang, string>} L
+ *  @typedef {{ group: L, icon: string, tone: string, items: string[], primary?: boolean }} SkillGroup
+ *  `tone` is a colour name resolved in app.css via [data-tone].
+ *  @typedef {{ company: string, role: L, period: L, summary: L, tech?: string[] }} Job
+ *  @typedef {{ school: string, course: L, year: string, logo: string, logoAlt: string }} Education
+ *  @typedef {{ name: string, issuer: string, badge: string }} Certification
+ *  @typedef {{ src: string, alt: L, kind?: 'wide'|'phone', cover?: boolean }} Screenshot
+ *  @typedef {{
+ *    slug: string, name: string, year: string, status: L, tagline: L, summary: L,
+ *    role: L, tags: string[], tone: string,
+ *    url?: string, repo?: string, screenshots?: Screenshot[], context: L,
+ *    challenges: Record<Lang, string[]>,
+ *    approach: { title: L, body: L }[],
+ *    architecture: { layer: L, detail: L }[],
+ *    stack: { group: L, items: string[] }[],
+ *    results: { value: string, label: L }[],
+ *    learnings: Record<Lang, string[]>,
+ *  }} Project
  */
-
-export const LANGS = ['pt', 'en'] as const;
-export type Lang = (typeof LANGS)[number];
-export type L<T = string> = Record<Lang, T>;
-
+/** @type {readonly Lang[]} */
+export const LANGS = ['pt', 'en'];
 /* ───────────────────────────────── profile ───────────────────────────────── */
 
-export type SkillIcon = 'server' | 'monitor' | 'cloud' | 'activity' | 'database' | 'sparkles' | 'layers';
-
 /** Accent color of a stack group. Mapped to classes in components/StackGrid.tsx. */
-export type SkillTone = 'blue' | 'emerald' | 'sky' | 'amber' | 'violet' | 'fuchsia' | 'rose';
-
-export type SkillGroup = {
-  group: L;
-  icon: SkillIcon;
-  tone: SkillTone;
-  items: string[];
-  /** Marks the group as the primary stack (renders a badge next to the title). */
-  primary?: boolean;
-};
-
 export const profile = {
   name: 'Robson Costa',
   initials: 'RC',
   role: {
     pt: 'Engenheiro de Software Sênior',
     en: 'Senior Software Engineer',
-  } satisfies L,
+  },
   specialties: {
     pt: 'Node.js · AWS · Java · Sistemas distribuídos · Engenharia assistida por IA',
     en: 'Node.js · AWS · Java · Distributed systems · AI-assisted engineering',
-  } satisfies L,
+  },
   tagline: {
     pt: 'Mais de 10 anos construindo e modernizando sistemas críticos de alta disponibilidade em bancos, fintechs, consultorias e SaaS. Hoje lidero tecnicamente plataformas financeiras no Itaú Unibanco.',
     en: 'Over 10 years building and modernizing critical, high-availability systems across banks, fintechs, consultancies and SaaS. Today I technically lead financial platforms at Itaú Unibanco.',
-  } satisfies L,
+  },
   location: {
     pt: 'São Paulo, Brasil',
     en: 'São Paulo, Brazil',
-  } satisfies L,
+  },
   email: 'robson.rsnomad@gmail.com',
   links: {
     linkedin: 'https://www.linkedin.com/in/robsoncsouza/',
@@ -72,69 +78,61 @@ export const profile = {
       'Before that I co-founded Gerencert, a SaaS for digital-certificate management used by registration authorities across Brazil, where sales handling time dropped from 8 minutes to 40 seconds. That combination of critical banking systems with a product built from zero is what I bring to every project.',
       'I also lead the adoption of AI-assisted engineering workflows (Claude Code, Devin, multi-agent approaches and Spec-Driven Development), speeding up technical analysis, implementation and production readiness.',
     ],
-  } satisfies L<string[]>,
+  },
   stats: [
-    { value: '10+', label: { pt: 'anos de engenharia de software', en: 'years of software engineering' } satisfies L },
-    { value: '2', label: { pt: 'formações acadêmicas: graduação e pós', en: 'academic degrees: bachelor’s and postgraduate' } satisfies L },
+    { value: '10+', label: { pt: 'anos de engenharia de software', en: 'years of software engineering' } },
+    { value: '2', label: { pt: 'formações acadêmicas: graduação e pós', en: 'academic degrees: bachelor’s and postgraduate' } },
   ],
   skills: [
     {
-      group: { pt: 'Back-end', en: 'Back-end' } satisfies L,
+      group: { pt: 'Back-end', en: 'Back-end' },
       icon: 'server',
       tone: 'blue',
       primary: true,
       items: ['Node.js', 'TypeScript', 'Java', 'Spring Boot', 'Python', 'REST APIs'],
     },
     {
-      group: { pt: 'Front-end', en: 'Front-end' } satisfies L,
+      group: { pt: 'Front-end', en: 'Front-end' },
       icon: 'monitor',
       tone: 'emerald',
       items: ['Angular', 'React'],
     },
     {
-      group: { pt: 'Cloud & Infra', en: 'Cloud & Infra' } satisfies L,
+      group: { pt: 'Cloud & Infra', en: 'Cloud & Infra' },
       icon: 'cloud',
       tone: 'sky',
       items: ['AWS', 'Azure', 'GCP', 'Terraform', 'Docker', 'CI/CD', 'Cloudflare'],
     },
     {
-      group: { pt: 'Confiabilidade', en: 'Reliability' } satisfies L,
+      group: { pt: 'Confiabilidade', en: 'Reliability' },
       icon: 'activity',
       tone: 'amber',
       items: ['Datadog', 'Grafana'],
     },
     {
-      group: { pt: 'Dados', en: 'Data' } satisfies L,
+      group: { pt: 'Dados', en: 'Data' },
       icon: 'database',
       tone: 'violet',
       items: ['SQL', 'NoSQL', 'MongoDB', 'Redis', 'Elasticsearch', 'PostgreSQL', 'MySQL'],
     },
     {
-      group: { pt: 'Engenharia assistida por IA', en: 'AI-assisted engineering' } satisfies L,
+      group: { pt: 'Engenharia assistida por IA', en: 'AI-assisted engineering' },
       icon: 'sparkles',
       tone: 'fuchsia',
       items: ['Claude Code', 'SDD', 'Multiagentes', 'Devin', 'GitHub Copilot'],
     },
     {
-      group: { pt: 'Arquitetura', en: 'Architecture' } satisfies L,
+      group: { pt: 'Arquitetura', en: 'Architecture' },
       icon: 'layers',
       tone: 'rose',
       items: ['Hexagonal', 'Clean Architecture', 'Microserviços'],
     },
-  ] as SkillGroup[],
+  ],
 };
 
 /* ────────────────────────── experience ─────────────────────── */
 
-export type Job = {
-  company: string;
-  role: L;
-  period: L;
-  summary: L;
-  tech?: string[];
-};
-
-export const experience: Job[] = [
+export const experience = [
   {
     company: 'Itaú Unibanco',
     role: { pt: 'Software Engineering Coordinator', en: 'Software Engineering Coordinator' },
@@ -217,16 +215,7 @@ export const experience: Job[] = [
   },
 ];
 
-export type Education = {
-  school: string;
-  course: L;
-  year: string;
-  /** Path under public/ to the institution logo. */
-  logo: string;
-  logoAlt: string;
-};
-
-export const education: Education[] = [
+export const education = [
   {
     school: 'FIAP',
     course: { pt: 'Pós-graduação em Arquitetura de Software', en: 'Postgraduate degree in Software Architecture' },
@@ -242,14 +231,7 @@ export const education: Education[] = [
     logoAlt: 'UMC, Universidade de Mogi das Cruzes',
   },
 ];
-export type Certification = {
-  name: string;
-  issuer: string;
-  /** Path under public/ to the official badge. */
-  badge: string;
-};
-
-export const certifications: Certification[] = [
+export const certifications = [
   {
     name: 'AWS Certified Solutions Architect – Associate',
     issuer: 'Amazon Web Services',
@@ -259,39 +241,7 @@ export const certifications: Certification[] = [
 
 /* ──────────────────────────────── projects ──────────────────────────────── */
 
-export type Screenshot = {
-  src: string;
-  alt: L;
-  kind?: 'wide' | 'phone';
-  /** Marks the image used as cover on listings. Defaults to the first wide shot. */
-  cover?: boolean;
-};
-
-export type Project = {
-  slug: string;
-  name: string;
-  /** Keep language-neutral: rendered as-is in PT and EN. */
-  year: string;
-  status: L;
-  tagline: L;
-  summary: L;
-  role: L;
-  tags: string[];
-  theme: { from: string; to: string; ring: string };
-  url?: string;
-  repo?: string;
-  /** Product screens shown on the case page. `phone` renders in a narrow frame. */
-  screenshots?: Screenshot[];
-  context: L;
-  challenges: L<string[]>;
-  approach: { title: L; body: L }[];
-  architecture: { layer: L; detail: L }[];
-  stack: { group: L; items: string[] }[];
-  results: { value: string; label: L }[];
-  learnings: L<string[]>;
-};
-
-export const projects: Project[] = [
+export const projects = [
   /* ═══════════════════════════════ Gerencert ═══════════════════════════════
    * Product and results confirmed from LinkedIn; technical detail from the
    * project's own documentation (per-service README and CLAUDE.md,
@@ -316,7 +266,7 @@ export const projects: Project[] = [
       en: 'Co-founder, architecture, full-stack development and infrastructure',
     },
     tags: ['Node.js', 'AngularJS', 'MongoDB', 'AWS', 'Terraform', 'Claude Code'],
-    theme: { from: 'from-emerald-400/20', to: 'to-teal-500/5', ring: 'ring-emerald-400/30' },
+    tone: 'emerald',
     screenshots: [
       { src: '/projects/gerencert/dashboard.webp', cover: true, alt: { pt: 'Painel geral do Gerencert com os atendimentos do dia e o gráfico de certificados cadastrados', en: 'Gerencert dashboard with the day’s appointments and a chart of registered certificates' } },
       { src: '/projects/gerencert/issuance.webp', alt: { pt: 'Fluxo de emissão de certificado: consulta, pagamento, agendamento e resumo', en: 'Certificate issuance flow: lookup, payment, scheduling and summary' } },
@@ -489,7 +439,7 @@ export const projects: Project[] = [
       en: 'Product, architecture, back-end, front-end, extension and infrastructure',
     },
     tags: ['Node.js', 'TypeScript', 'React', 'Extensão Chrome', 'AWS', 'Terraform'],
-    theme: { from: 'from-amber-400/20', to: 'to-yellow-500/5', ring: 'ring-amber-400/30' },
+    tone: 'amber',
     screenshots: [
       { src: '/projects/yellowjobs/landing.webp', alt: { pt: 'Landing page do YellowJobs, com o título "O agente que busca vagas e se candidata por você"', en: 'YellowJobs landing page with the headline "The agent that finds jobs and applies for you"' } },
       { src: '/projects/yellowjobs/kanban.webp', cover: true, alt: { pt: 'Painel de candidaturas em kanban: Pendentes, Executando, Falhas e Aplicadas', en: 'Applications kanban board: Pending, Running, Failed and Applied' } },
@@ -635,7 +585,7 @@ export const projects: Project[] = [
       en: 'Product, architecture, back-end, mobile app and infrastructure',
     },
     tags: ['React Native', 'TypeScript', 'Node.js', 'B3', 'AWS', 'Terraform'],
-    theme: { from: 'from-violet-400/20', to: 'to-fuchsia-500/5', ring: 'ring-violet-400/30' },
+    tone: 'violet',
     screenshots: [
       { src: '/projects/moosy/landing.webp', alt: { pt: 'Imagem de apresentação do Moosy com a frase "Não tenha só sonhos, tenha planos para eles"', en: 'Moosy presentation image with the line "Don’t just have dreams, have plans for them"' } },
       { src: '/projects/moosy/home.webp', kind: 'phone', alt: { pt: 'Tela inicial do app Moosy', en: 'Moosy app home screen' } },
@@ -751,4 +701,4 @@ export const projects: Project[] = [
   },
 ];
 
-export const getProject = (slug: string) => projects.find((p) => p.slug === slug);
+export const getProject = (slug) => projects.find((p) => p.slug === slug);

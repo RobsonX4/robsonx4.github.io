@@ -6,7 +6,7 @@
  */
 import { writeFile } from 'node:fs/promises';
 import sharp from 'sharp';
-import { profile } from '../content/site.ts';
+import { profile } from '../src/content/site.js';
 
 const INK = '#0f1218';
 const INK_SOFT = '#b0b9c9';
