@@ -1,4 +1,4 @@
-import { profile, type Lang, type SkillGroup, type SkillIcon } from '@/content/site';
+import { profile, type Lang, type SkillGroup, type SkillIcon, type SkillTone } from '@/content/site';
 import { ui } from '@/content/ui';
 import { Reveal } from '@/components/Reveal';
 
@@ -37,6 +37,45 @@ const paths: Record<SkillIcon, React.ReactNode> = {
       <path d="M2 12l10 5 10-5M2 16l10 5 10-5" />
     </>
   ),
+};
+
+/** Full class strings per tone, so Tailwind keeps them in the build. */
+const tones: Record<SkillTone, { tile: string; card: string; chip: string }> = {
+  blue: {
+    tile: 'bg-blue-500/12 text-blue-600 dark:bg-blue-400/15 dark:text-blue-300',
+    card: 'hover:border-blue-400/60 dark:hover:border-blue-400/40',
+    chip: 'border-blue-500/25 dark:border-blue-400/25',
+  },
+  emerald: {
+    tile: 'bg-emerald-500/12 text-emerald-600 dark:bg-emerald-400/15 dark:text-emerald-300',
+    card: 'hover:border-emerald-400/60 dark:hover:border-emerald-400/40',
+    chip: 'border-emerald-500/25 dark:border-emerald-400/25',
+  },
+  sky: {
+    tile: 'bg-sky-500/12 text-sky-600 dark:bg-sky-400/15 dark:text-sky-300',
+    card: 'hover:border-sky-400/60 dark:hover:border-sky-400/40',
+    chip: 'border-sky-500/25 dark:border-sky-400/25',
+  },
+  amber: {
+    tile: 'bg-amber-500/14 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300',
+    card: 'hover:border-amber-400/60 dark:hover:border-amber-400/40',
+    chip: 'border-amber-500/25 dark:border-amber-400/25',
+  },
+  violet: {
+    tile: 'bg-violet-500/12 text-violet-600 dark:bg-violet-400/15 dark:text-violet-300',
+    card: 'hover:border-violet-400/60 dark:hover:border-violet-400/40',
+    chip: 'border-violet-500/25 dark:border-violet-400/25',
+  },
+  fuchsia: {
+    tile: 'bg-fuchsia-500/12 text-fuchsia-600 dark:bg-fuchsia-400/15 dark:text-fuchsia-300',
+    card: 'hover:border-fuchsia-400/60 dark:hover:border-fuchsia-400/40',
+    chip: 'border-fuchsia-500/25 dark:border-fuchsia-400/25',
+  },
+  rose: {
+    tile: 'bg-rose-500/12 text-rose-600 dark:bg-rose-400/15 dark:text-rose-300',
+    card: 'hover:border-rose-400/60 dark:hover:border-rose-400/40',
+    chip: 'border-rose-500/25 dark:border-rose-400/25',
+  },
 };
 
 function Icon({ name, className = 'h-5 w-5' }: { name: SkillIcon; className?: string }) {
@@ -82,17 +121,18 @@ function Featured({ group, lang }: { group: SkillGroup; lang: Lang }) {
 }
 
 function Card({ group, lang }: { group: SkillGroup; lang: Lang }) {
+  const tone = tones[group.tone];
   return (
-    <div className="card flex h-full flex-col p-6 hover:border-ink-300 dark:hover:border-white/20">
+    <div className={`card flex h-full flex-col p-6 ${tone.card}`}>
       <div className="flex items-center gap-3">
-        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ink-100 text-ink-700 dark:bg-white/[0.06] dark:text-ink-200">
+        <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${tone.tile}`}>
           <Icon name={group.icon} />
         </span>
         <h3 className="font-semibold tracking-tight text-ink-900 dark:text-white">{group.group[lang]}</h3>
       </div>
       <ul className="mt-5 flex flex-wrap gap-2">
         {group.items.map((it) => (
-          <li key={it} className="chip">
+          <li key={it} className={`chip ${tone.chip}`}>
             {it}
           </li>
         ))}

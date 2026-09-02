@@ -21,9 +21,13 @@ export type L<T = string> = Record<Lang, T>;
 
 export type SkillIcon = 'server' | 'monitor' | 'cloud' | 'activity' | 'database' | 'sparkles' | 'layers';
 
+/** Accent color of a stack group. Mapped to classes in components/StackGrid.tsx. */
+export type SkillTone = 'blue' | 'emerald' | 'sky' | 'amber' | 'violet' | 'fuchsia' | 'rose';
+
 export type SkillGroup = {
   group: L;
   icon: SkillIcon;
+  tone: SkillTone;
   items: string[];
   /** Marks the group as the primary stack (renders a badge next to the title). */
   primary?: boolean;
@@ -75,37 +79,44 @@ export const profile = {
     {
       group: { pt: 'Back-end', en: 'Back-end' } satisfies L,
       icon: 'server',
+      tone: 'blue',
       primary: true,
       items: ['Node.js', 'TypeScript', 'Java', 'Spring Boot', 'Python', 'REST APIs'],
     },
     {
       group: { pt: 'Front-end', en: 'Front-end' } satisfies L,
       icon: 'monitor',
+      tone: 'emerald',
       items: ['Angular', 'React'],
     },
     {
       group: { pt: 'Cloud & Infra', en: 'Cloud & Infra' } satisfies L,
       icon: 'cloud',
+      tone: 'sky',
       items: ['AWS', 'Azure', 'GCP', 'Terraform', 'Docker', 'CI/CD', 'Cloudflare'],
     },
     {
       group: { pt: 'Confiabilidade', en: 'Reliability' } satisfies L,
       icon: 'activity',
+      tone: 'amber',
       items: ['Datadog', 'Grafana'],
     },
     {
       group: { pt: 'Dados', en: 'Data' } satisfies L,
       icon: 'database',
+      tone: 'violet',
       items: ['SQL', 'NoSQL', 'MongoDB', 'Redis', 'Elasticsearch', 'PostgreSQL', 'MySQL'],
     },
     {
       group: { pt: 'Engenharia assistida por IA', en: 'AI-assisted engineering' } satisfies L,
       icon: 'sparkles',
+      tone: 'fuchsia',
       items: ['Claude Code', 'SDD', 'Multiagentes', 'Devin', 'GitHub Copilot'],
     },
     {
       group: { pt: 'Arquitetura', en: 'Architecture' } satisfies L,
       icon: 'layers',
+      tone: 'rose',
       items: ['Hexagonal', 'Clean Architecture', 'Microserviços'],
     },
   ] as SkillGroup[],
