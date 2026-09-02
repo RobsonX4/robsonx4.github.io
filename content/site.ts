@@ -8,8 +8,8 @@
  *  CONTENT PROVENANCE
  *   ✔ Profile, experience, education and the Gerencert case come from
  *     LinkedIn (linkedin.com/in/robsoncsouza), as of 2026-08-31.
- *   ⚠ YellowJobs and Moosy are NOT on LinkedIn. Those two cases are drafts
- *     and are marked with "TODO:". Review before treating them as fact.
+ *   ✔ YellowJobs and Moosy: product facts from yellowjobs.com.br and
+ *     moosy.app (read on 2026-09-02); engineering narrative from Robson.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -246,6 +246,14 @@ export const certifications: Certification[] = [
 
 /* ──────────────────────────────── projects ──────────────────────────────── */
 
+export type Screenshot = {
+  src: string;
+  alt: L;
+  kind?: 'wide' | 'phone';
+  /** Marks the image used as cover on listings. Defaults to the first wide shot. */
+  cover?: boolean;
+};
+
 export type Project = {
   slug: string;
   name: string;
@@ -259,6 +267,8 @@ export type Project = {
   theme: { from: string; to: string; ring: string };
   url?: string;
   repo?: string;
+  /** Product screens shown on the case page. `phone` renders in a narrow frame. */
+  screenshots?: Screenshot[];
   context: L;
   challenges: L<string[]>;
   approach: { title: L; body: L }[];
@@ -382,219 +392,285 @@ export const projects: Project[] = [
   },
 
   /* ═══════════════════════════════ YellowJobs ═══════════════════════════════
-   * TODO: this case is a DRAFT and was not on LinkedIn. Review context,
-   * challenges, decisions and, above all, the numbers in `results`.
+   * Product facts from yellowjobs.com.br (read on 2026-09-02). Engineering
+   * narrative provided by Robson.
    * ═════════════════════════════════════════════════════════════════════════ */
   {
     slug: 'yellowjobs',
     name: 'YellowJobs',
     year: '2024 →',
     status: { pt: 'Em produção', en: 'In production' },
+    url: 'https://yellowjobs.com.br',
     tagline: {
-      pt: 'Plataforma de vagas que conecta candidatos e empresas sem o ruído dos grandes portais.',
-      en: 'A job platform connecting candidates and companies without the noise of the big portals.',
+      pt: 'O agente que busca vagas de tecnologia em várias fontes e se candidata por você, com regras que são suas.',
+      en: 'The agent that finds tech jobs across sources and applies on your behalf, following rules you wrote.',
     },
     summary: {
-      pt: 'YellowJobs nasceu de uma constatação simples: os portais de vaga otimizam para volume, não para encaixe. Candidato recebe dezenas de vagas que não servem, recrutador recebe centenas de currículos que não servem. A plataforma inverte a lógica: cadastro estruturado dos dois lados, matching por critérios explícitos e um fluxo de candidatura curto o bastante para ser terminado no celular.',
-      en: 'YellowJobs came out of a simple observation: job portals optimize for volume, not fit. Candidates get dozens of postings that do not fit, recruiters get hundreds of résumés that do not fit. The platform flips that: structured profiles on both sides, matching on explicit criteria, and an application flow short enough to finish on a phone.',
+      pt: 'Procurar vaga de tecnologia é repetir o mesmo formulário dezenas de vezes por semana. O YellowJobs reúne vagas de diversas fontes em um só painel e envia a candidatura por você, a partir da sua própria conta e da sua própria sessão. Você escreve a regra do que vale a pena; o agente executa. Ele não inventa um dado seu e não se candidata duas vezes à mesma vaga. O acesso é por convite, e o primeiro lote de até 50 candidaturas é gratuito.',
+      en: 'Looking for a tech job means filling in the same form dozens of times a week. YellowJobs gathers jobs from several sources into one board and submits the application for you, from your own account and your own session. You write the rule for what is worth applying to; the agent follows it. It never makes up a fact about you and never applies twice to the same job. Access is by invitation, and the first batch of up to 50 applications is free.',
     },
     role: {
-      pt: 'Especificação, back-end, front-end e infraestrutura',
-      en: 'Spec, back-end, front-end and infrastructure',
+      pt: 'Produto, arquitetura, back-end, front-end, extensão e infraestrutura',
+      en: 'Product, architecture, back-end, front-end, extension and infrastructure',
     },
-    tags: ['Node.js', 'TypeScript', 'MongoDB', 'React', 'Docker', 'AWS'],
+    tags: ['Node.js', 'TypeScript', 'React', 'Extensão Chrome', 'AWS', 'Terraform'],
     theme: { from: 'from-amber-400/20', to: 'to-yellow-500/5', ring: 'ring-amber-400/30' },
+    screenshots: [
+      { src: '/projects/yellowjobs/landing.webp', alt: { pt: 'Landing page do YellowJobs, com o título "O agente que busca vagas e se candidata por você"', en: 'YellowJobs landing page with the headline "The agent that finds jobs and applies for you"' } },
+      { src: '/projects/yellowjobs/kanban.webp', cover: true, alt: { pt: 'Painel de candidaturas em kanban: Pendentes, Executando, Falhas e Aplicadas', en: 'Applications kanban board: Pending, Running, Failed and Applied' } },
+      { src: '/projects/yellowjobs/overlay.webp', alt: { pt: 'Extensão do Chrome preenchendo um formulário de vaga, com o painel sobreposto mostrando o campo atual', en: 'Chrome extension filling in a job form, with the overlay panel showing the current field' } },
+      { src: '/projects/yellowjobs/profile.webp', alt: { pt: 'Tela de perfil do candidato com as respostas salvas para reuso', en: 'Candidate profile screen with saved answers for reuse' } },
+    ],
     context: {
-      pt: 'Recrutadores de pequenas e médias empresas não têm ATS. Gerenciam processo seletivo em planilha e caixa de e-mail, perdem candidato por falta de resposta e não conseguem medir nada: quantos entraram, onde pararam, por que desistiram. Do outro lado, o candidato envia a candidatura e nunca sabe se alguém abriu seu currículo.',
-      en: 'Recruiters at small and mid-sized companies have no ATS. They run hiring in a spreadsheet and an inbox, lose candidates to unanswered e-mails, and can measure nothing: how many applied, where they dropped, why they gave up. On the other side, candidates send an application and never learn whether anyone opened their résumé.',
+      pt: 'Quem procura vaga de tecnologia no Brasil, ou remoto no exterior, passa pelo mesmo ciclo: achar a vaga em um portal, abrir o site da empresa, criar conta, preencher um formulário longo, repetir no dia seguinte. As ferramentas de automação que existem fazem isso do lado do servidor, pedindo a senha do candidato e enviando candidaturas que ele nunca viu. O YellowJobs parte de outra premissa. O agente busca e organiza as vagas, mas o preenchimento acontece na máquina do candidato, na sessão que já é dele, e a decisão do que enviar segue a regra que ele mesmo escreveu. O recrutador recebe uma candidatura do candidato, porque é isso que ela é.',
+      en: 'Anyone looking for a tech job in Brazil, or remotely abroad, goes through the same loop: find the job on a portal, open the company site, create an account, fill in a long form, repeat the next day. Existing automation tools do this server-side, asking for the candidate’s password and sending applications they never saw. YellowJobs starts from a different premise. The agent finds and organizes the jobs, but the form is filled in on the candidate’s machine, in a session that is already theirs, and the decision of what to send follows a rule they wrote. The recruiter receives an application from the candidate, because that is what it is.',
     },
     challenges: {
       pt: [
-        'Modelar vaga, candidatura e perfil de forma que o matching fosse consultável, e não um campo de texto livre.',
-        'Manter o fluxo de candidatura curto sem perder os dados que o recrutador realmente precisa para decidir.',
-        'Dar visibilidade de estágio (triagem → entrevista → oferta) sem transformar a ferramenta num CRM pesado.',
-        'Rodar barato: o produto precisa se pagar antes de escalar.',
+        'Preencher formulários de sites que não controlamos, cada um com sua estrutura, sem quebrar quando o site muda.',
+        'Garantir que nenhuma senha de portal de vagas passe pelo nosso servidor, mantendo a candidatura na conta do próprio usuário.',
+        'Fazer o agente parar e perguntar quando não sabe uma resposta, em vez de estimar, e reaproveitar a resposta em qualquer site que fizer a mesma pergunta.',
+        'Detectar candidatura duplicada antes do envio, já que repetir uma candidatura pode custar a vaga.',
+        'Abrir o acesso devagar: cada site novo precisa ser medido antes de virar promessa, e o produto só promete o que já mediu.',
+        'Construir front-end, back-end, extensão, landing page, infraestrutura e identidade visual com uma pessoa, apoiada por agentes de IA.',
       ],
       en: [
-        'Modeling job, application and profile so that matching is queryable instead of a free-text blob.',
-        'Keeping the application flow short without losing the data recruiters actually need to decide.',
-        'Giving pipeline visibility (screening → interview → offer) without turning the tool into a heavy CRM.',
-        'Running cheap: the product has to pay for itself before it scales.',
+        'Filling in forms on sites we do not control, each with its own structure, without breaking when the site changes.',
+        'Making sure no job-portal password ever reaches our server, keeping the application inside the user’s own account.',
+        'Getting the agent to stop and ask when it does not know an answer, instead of guessing, and reusing the answer on any site that asks the same question.',
+        'Detecting a duplicate application before sending, since applying twice can cost the job.',
+        'Opening access slowly: every new site has to be measured before it becomes a promise, and the product only promises what it has measured.',
+        'Building front-end, back-end, extension, landing page, infrastructure and visual identity with one person, supported by AI agents.',
       ],
     },
     approach: [
       {
-        title: { pt: 'Especificação antes de código', en: 'Spec before code' },
+        title: { pt: 'Especificar antes de programar', en: 'Specify before coding' },
         body: {
-          pt: 'A demanda foi escrita como documento: personas, o passo a passo do candidato, o passo a passo do recrutador e regras de negócio explícitas (quem pode ver o quê, o que torna uma vaga válida, o que encerra uma candidatura). Só depois foi quebrada em issues independentes de back-end, front-end e infra.',
-          en: 'The demand was written as a document first: personas, the candidate’s steps, the recruiter’s steps and explicit business rules (who sees what, what makes a posting valid, what closes an application). Only then was it broken into independent back-end, front-end and infra issues.',
+          pt: 'O projeto foi conduzido em Spec-Driven Development. Cada funcionalidade nasce como uma especificação: o que o usuário vê, o que o sistema garante, o que fica fora. A spec é o contrato entre os agentes de IA que implementam cada parte e a referência para os testes. Quando algo sai diferente do combinado, a discussão volta para a spec, não para o código.',
+          en: 'The project followed Spec-Driven Development. Every feature starts as a specification: what the user sees, what the system guarantees, what is out of scope. The spec is the contract between the AI agents that implement each part and the reference for the tests. When something comes out different from what was agreed, the discussion goes back to the spec, not to the code.',
         },
       },
       {
-        title: { pt: 'Domínio isolado da infraestrutura', en: 'Domain isolated from infrastructure' },
+        title: { pt: 'Um time de agentes com especialidades', en: 'A team of agents with specialties' },
         body: {
-          pt: 'O back-end segue Clean Architecture: entidades e casos de uso não conhecem Express nem Mongoose. As regras (“vaga expirada não aceita candidatura”, “candidato não se candidata duas vezes”) vivem em use cases testáveis sem subir banco.',
-          en: 'The back-end follows Clean Architecture: entities and use cases know nothing about Express or Mongoose. The rules ("an expired posting takes no applications", "a candidate cannot apply twice") live in use cases testable without a database.',
+          pt: 'Em vez de um único assistente genérico, o trabalho foi dividido entre agentes especializados: um de produto e especificação, um de back-end, um de front-end, um de infraestrutura, um de qualidade e um de escrita para a copy das páginas. Cada agente conhece as convenções da sua área e recebe a spec como entrada. Eu fico com a arquitetura, a revisão e as decisões que não cabem em uma spec.',
+          en: 'Instead of a single generic assistant, the work was split among specialized agents: one for product and specification, one for back-end, one for front-end, one for infrastructure, one for quality and one for writing the page copy. Each agent knows the conventions of its area and takes the spec as input. I keep architecture, review and the decisions that do not fit in a spec.',
         },
       },
       {
-        title: { pt: 'Matching como consulta, não como IA', en: 'Matching as a query, not as AI' },
+        title: { pt: 'O preenchimento acontece na máquina do usuário', en: 'Forms are filled on the user’s machine' },
         body: {
-          pt: 'Em vez de prometer inteligência artificial, o matching é um pipeline de agregação sobre campos estruturados: senioridade, stack, faixa salarial, modelo de trabalho e localização. É explicável, rápido e o recrutador entende por que aquele candidato apareceu.',
-          en: 'Rather than promising AI, matching is an aggregation pipeline over structured fields: seniority, stack, salary band, work model and location. It is explainable, fast, and the recruiter understands why a given candidate showed up.',
+          pt: 'Uma extensão do Chrome abre a vaga, lê o formulário e preenche campo a campo, usando a sessão que o usuário já tem no site. Um painel sobreposto mostra o que está sendo feito e o botão "Prefiro preencher" deixa o usuário assumir no meio, sem perder o que já foi preenchido. O servidor nunca recebe senha de site de vagas, porque não precisa dela para nada. A extensão ainda é distribuída fora da Chrome Web Store, em modo desenvolvedor, para quem entra no lote.',
+          en: 'A Chrome extension opens the job, reads the form and fills it in field by field, using the session the user already has on that site. An overlay panel shows what is happening and an "I’d rather fill this in" button lets the user take over midway without losing what was already filled. The server never receives a job-site password, because it does not need one. The extension is still distributed outside the Chrome Web Store, in developer mode, to those who join a batch.',
         },
       },
       {
-        title: { pt: 'Candidatura em uma tela', en: 'One-screen application' },
+        title: { pt: 'Um agente que não inventa dado', en: 'An agent that does not make things up' },
         body: {
-          pt: 'O perfil do candidato é preenchido uma vez. Candidatar-se é uma confirmação, não um formulário. Isso ataca o abandono no meio do fluxo, que é onde o funil mais perde gente.',
-          en: 'The candidate profile is filled in once. Applying is a confirmation, not a form. That attacks mid-flow abandonment, where the funnel loses the most people.',
+          pt: 'O agente responde só o que é fato no perfil do candidato. Uma pergunta que ele não sabe responder não vira estimativa: vira uma pergunta para o usuário, e a candidatura espera. A resposta fica salva e é reusada em toda vaga que fizer a mesma pergunta, escrita do jeito que a pessoa escreveria. Antes de enviar, o agente confere se aquela vaga já recebeu candidatura e para se for o caso.',
+          en: 'The agent answers only what is a fact in the candidate’s profile. A question it cannot answer does not become an estimate: it becomes a question for the user, and the application waits. The answer is saved and reused on every job that asks the same thing, written the way the person would write it. Before sending, the agent checks whether that job already received an application and stops if so.',
         },
       },
       {
-        title: { pt: 'Deploy containerizado e reprodutível', en: 'Containerized, reproducible deploy' },
+        title: { pt: 'Front-end, back-end e um painel para acompanhar', en: 'Front-end, back-end and a board to follow along' },
         body: {
-          pt: 'API, front-end e banco sobem por Docker Compose, com build multi-stage para imagens enxutas e proxy reverso com TLS. O mesmo compose roda local e na AWS, então o que quebraria em produção quebra antes, no desenvolvimento.',
-          en: 'API, front-end and database come up through Docker Compose, with multi-stage builds for lean images and a TLS reverse proxy. The same compose runs locally and on AWS, so whatever would break in production breaks earlier, in development.',
+          pt: 'O back-end em Node.js e TypeScript coleta vagas de várias fontes, calcula a aderência ao perfil e coordena a fila de candidaturas. O front-end em React apresenta tudo em um kanban com quatro colunas: Pendentes, Executando, Falhas e Aplicadas. Cada card mostra a vaga, a empresa, a aderência em porcentagem e o estado atual, do "aguardando sua aprovação" ao "enviada, comprovante salvo". No modo em lote, a coluna de pendentes anda sozinha, dentro das regras do usuário.',
+          en: 'The Node.js and TypeScript back-end collects jobs from several sources, scores fit against the profile and coordinates the application queue. The React front-end shows everything on a kanban with four columns: Pending, Running, Failed and Applied. Each card shows the job, the company, the fit percentage and the current state, from "waiting for your approval" to "sent, receipt saved". In batch mode the pending column moves on its own, within the user’s rules.',
+        },
+      },
+      {
+        title: { pt: 'Infraestrutura compartilhada, como código', en: 'Shared infrastructure, as code' },
+        body: {
+          pt: 'YellowJobs e Moosy são produtos diferentes, mas precisam das mesmas coisas de base: rede, cluster, banco, certificados, DNS, segredos. Essa camada comum foi provisionada uma vez com Terraform e é reaproveitada pelos dois. Cada produto tem seus módulos por cima, também em Terraform, e nada é criado à mão no console. Os front-ends e a landing page são estáticos, hospedados em S3 e servidos pelo CloudFront, o que mantém o custo baixo e a entrega rápida em qualquer região.',
+          en: 'YellowJobs and Moosy are different products, but they need the same foundations: network, cluster, database, certificates, DNS, secrets. That common layer was provisioned once with Terraform and is shared by both. Each product has its own modules on top, also in Terraform, and nothing is created by hand in the console. Front-ends and the landing page are static, hosted on S3 and served through CloudFront, which keeps cost low and delivery fast in any region.',
+        },
+      },
+      {
+        title: { pt: 'Pipeline, testes e observabilidade', en: 'Pipeline, tests and observability' },
+        body: {
+          pt: 'Todo commit passa por um pipeline de CI/CD que roda testes automatizados, faz o build e publica. O que chega em produção é o que passou pelos testes, sem passo manual. Do lado da operação, logs, métricas e alertas cobrem a saúde do sistema, e um conjunto de métricas de produto acompanha o que importa para o negócio: quantas vagas foram coletadas, quantas candidaturas foram aprovadas, quantas falharam e em que campo. Foi esse painel que permitiu abrir o acesso site por site, medindo antes de prometer.',
+          en: 'Every commit goes through a CI/CD pipeline that runs automated tests, builds and publishes. What reaches production is what passed the tests, with no manual step. On the operations side, logs, metrics and alerts cover system health, and a set of product metrics tracks what matters to the business: how many jobs were collected, how many applications were approved, how many failed and on which field. That dashboard is what made it possible to open access site by site, measuring before promising.',
+        },
+      },
+      {
+        title: { pt: 'Identidade, landing page e divulgação', en: 'Identity, landing page and launch' },
+        body: {
+          pt: 'A marca foi criada do zero: tema escuro, amarelo como cor principal e um "Y" cujo braço longo é um visto, para lembrar quem decide onde ele cai. A landing page é bilíngue, organizada em quatro artigos que explicam o produto sem exagero, com atenção a performance, metadados, Open Graph e URLs canônicas por idioma. Para a divulgação, montei um plano de publicações no Instagram, com sequência de posts que apresenta o produto e o que ele não faz, no mesmo tom da página.',
+          en: 'The brand was built from scratch: dark theme, yellow as the main color and a "Y" whose long arm is a checkmark, a reminder of who decides where it lands. The landing page is bilingual, organized into four articles that explain the product without overstatement, with care for performance, metadata, Open Graph and per-language canonical URLs. For the launch I put together an Instagram publishing plan, a sequence of posts that presents the product and what it does not do, in the same tone as the page.',
         },
       },
     ],
     architecture: [
-      { layer: { pt: 'Domínio', en: 'Domain' }, detail: { pt: 'Entidades Vaga, Candidato, Empresa e Candidatura, com invariantes validadas na própria entidade.', en: 'Job, Candidate, Company and Application entities, with invariants validated inside the entity itself.' } },
-      { layer: { pt: 'Casos de uso', en: 'Use cases' }, detail: { pt: 'Um caso de uso por ação de negócio, dependente apenas de interfaces de repositório.', en: 'One use case per business action, depending only on repository interfaces.' } },
-      { layer: { pt: 'Adaptadores', en: 'Adapters' }, detail: { pt: 'Controllers Express finos + repositórios Mongoose implementando as interfaces do domínio.', en: 'Thin Express controllers + Mongoose repositories implementing the domain interfaces.' } },
-      { layer: { pt: 'Interface', en: 'Interface' }, detail: { pt: 'SPA React consumindo a API REST, com estados de carregamento e erro tratados por rota.', en: 'React SPA consuming the REST API, with loading and error states handled per route.' } },
-      { layer: { pt: 'Infra', en: 'Infra' }, detail: { pt: 'Docker Compose, proxy reverso com TLS, AWS, backup agendado e logs centralizados.', en: 'Docker Compose, TLS reverse proxy, AWS, scheduled backups and centralized logs.' } },
+      { layer: { pt: 'Extensão do Chrome', en: 'Chrome extension' }, detail: { pt: 'Lê e preenche formulários na sessão do usuário, exibe o painel sobreposto e permite assumir o preenchimento a qualquer momento.', en: 'Reads and fills forms in the user’s session, shows the overlay panel and lets the user take over at any time.' } },
+      { layer: { pt: 'Front-end web', en: 'Web front-end' }, detail: { pt: 'React e TypeScript. Kanban de candidaturas, perfil com respostas salvas e regras de aplicação. Estático em S3, servido pelo CloudFront.', en: 'React and TypeScript. Applications kanban, profile with saved answers and application rules. Static on S3, served through CloudFront.' } },
+      { layer: { pt: 'API e agente', en: 'API and agent' }, detail: { pt: 'Node.js e TypeScript. Coleta de vagas em múltiplas fontes, cálculo de aderência, fila de candidaturas, detecção de duplicidade e perguntas pendentes ao usuário.', en: 'Node.js and TypeScript. Job collection from multiple sources, fit scoring, application queue, duplicate detection and pending questions to the user.' } },
+      { layer: { pt: 'Dados', en: 'Data' }, detail: { pt: 'MongoDB para vagas, candidaturas, perfil e respostas reutilizáveis.', en: 'MongoDB for jobs, applications, profile and reusable answers.' } },
+      { layer: { pt: 'Infraestrutura compartilhada', en: 'Shared infrastructure' }, detail: { pt: 'Rede, cluster, DNS, certificados e segredos provisionados com Terraform na AWS e compartilhados com o Moosy.', en: 'Network, cluster, DNS, certificates and secrets provisioned with Terraform on AWS and shared with Moosy.' } },
+      { layer: { pt: 'Entrega e operação', en: 'Delivery and operations' }, detail: { pt: 'Pipeline de CI/CD com testes automatizados. Logs, métricas e alertas do sistema, mais métricas de produto por fonte e por site.', en: 'CI/CD pipeline with automated tests. System logs, metrics and alerts, plus product metrics per source and per site.' } },
     ],
     stack: [
-      { group: { pt: 'Back-end', en: 'Back-end' }, items: ['Node.js', 'TypeScript', 'Express', 'MongoDB', 'JWT', 'Jest'] },
-      { group: { pt: 'Front-end', en: 'Front-end' }, items: ['React', 'TypeScript', 'Tailwind CSS'] },
-      { group: { pt: 'Infra', en: 'Infra' }, items: ['Docker', 'Docker Compose', 'AWS', 'CI/CD'] },
+      { group: { pt: 'Front-end e extensão', en: 'Front-end and extension' }, items: ['React', 'TypeScript', 'Extensão Chrome'] },
+      { group: { pt: 'Back-end', en: 'Back-end' }, items: ['Node.js', 'TypeScript', 'MongoDB'] },
+      { group: { pt: 'Infra', en: 'Infra' }, items: ['AWS', 'Terraform', 'S3', 'CloudFront', 'CI/CD'] },
+      { group: { pt: 'Operação', en: 'Operations' }, items: ['Logs', 'Métricas', 'Alertas', 'Métricas de produto'] },
+      { group: { pt: 'Método', en: 'Method' }, items: ['Spec-Driven Development', 'Multiagentes', 'Claude Code'] },
     ],
-    // TODO: replace with the project's real numbers.
     results: [
-      { value: '1 tela', label: { pt: 'para concluir uma candidatura', en: 'to complete an application' } },
-      { value: '?', label: { pt: 'TODO: latência da busca com filtros', en: 'TODO: filtered-search latency' } },
-      { value: '?', label: { pt: 'TODO: cobertura de teste ou volume de uso', en: 'TODO: test coverage or usage volume' } },
+      { value: '0', label: { pt: 'senhas de sites de vagas passando pelo servidor', en: 'job-site passwords passing through the server' } },
+      { value: '50', label: { pt: 'candidaturas grátis no primeiro lote, sem cartão', en: 'free applications in the first batch, no card required' } },
+      { value: 'S3 + CloudFront', label: { pt: 'hospedagem estática do front-end e da landing page', en: 'static hosting for the front-end and landing page' } },
     ],
     learnings: {
       pt: [
-        'Campo estruturado vence campo livre. Todo dado que vira texto solto é um filtro que você não vai conseguir construir depois.',
-        'Clean Architecture só compensa quando as regras de negócio são muitas. Aqui são, e trocar detalhe de persistência sai de graça.',
-        'Explicabilidade é feature: recrutador confia no ranking quando entende o critério.',
+        'Rodar o preenchimento na máquina do usuário foi a decisão mais importante do produto. Custou mais engenharia do que fazer no servidor, mas resolveu privacidade, sessão e confiança de uma vez.',
+        'Um agente que sabe dizer "não sei" é mais útil do que um que sempre responde. A pergunta pendente virou parte do fluxo, não um erro.',
+        'Especificar antes de implementar deu velocidade com agentes de IA, não o contrário. A spec evita o retrabalho de descobrir o combinado no meio do código.',
+        'Abrir o acesso por lotes pequenos e medir cada site antes de prometer deixou o produto honesto com quem usa e com quem constrói.',
       ],
       en: [
-        'Structured fields beat free text. Every piece of data that becomes loose prose is a filter you will not be able to build later.',
-        'Clean Architecture only pays off when there are many business rules. Here there are, and swapping persistence details costs nothing.',
-        'Explainability is a feature: recruiters trust the ranking when they understand the criteria.',
+        'Running the form filling on the user’s machine was the most important product decision. It cost more engineering than doing it server-side, but it solved privacy, session and trust at once.',
+        'An agent that knows how to say "I don’t know" is more useful than one that always answers. The pending question became part of the flow, not an error.',
+        'Specifying before implementing made AI agents faster, not slower. The spec avoids the rework of discovering the agreement halfway through the code.',
+        'Opening access in small batches and measuring each site before promising kept the product honest with users and with the people building it.',
       ],
     },
   },
 
   /* ═════════════════════════════════ Moosy ═════════════════════════════════
-   * TODO: this case is a DRAFT and was not on LinkedIn. Review everything,
-   * especially what Moosy actually does and the numbers in `results`.
+   * Product facts from moosy.app (read on 2026-09-02). Engineering narrative
+   * provided by Robson.
    * ═════════════════════════════════════════════════════════════════════════ */
   {
     slug: 'moosy',
     name: 'Moosy',
     year: '2024 →',
     status: { pt: 'Em produção', en: 'In production' },
+    url: 'https://moosy.app',
     tagline: {
-      pt: 'Aplicativo mobile em React Native, construído para funcionar bem também quando a conexão não colabora.',
-      en: 'React Native mobile app, built to work well even when the connection does not cooperate.',
+      pt: 'App de finanças pessoais que reúne o controle do mês, os investimentos e as metas, com contas compartilhadas.',
+      en: 'A personal finance app that brings the monthly budget, investments and goals together, with shared accounts.',
     },
     summary: {
-      pt: 'Moosy é o produto mobile do conjunto. A restrição que definiu quase todas as decisões técnicas foi a rede: os usuários abrem o app em movimento, em conexão instável, e abandonam quando a tela demora a carregar. A resposta foi uma arquitetura offline-first, com cache local como fonte de verdade da UI e sincronização em segundo plano.',
-      en: 'Moosy is the mobile product in the set. The constraint that drove nearly every technical decision was the network: users open the app on the move, on flaky connections, and leave when the screen takes too long to load. The answer was an offline-first architecture, with the local cache as the UI’s source of truth and background synchronization.',
+      pt: 'Moosy nasceu de uma frase: não tenha só sonhos, tenha planos para eles. O app junta em um só lugar o balanço do mês, os investimentos importados direto da B3 e as metas ligadas a ativos reais, com progresso em tempo real. Tudo pode ser compartilhado com quem cuida das contas junto, organizado por conta: Pessoal, Casa, o que precisar. Está em beta por convite, com 30 dias grátis e depois R$ 6,99 por mês.',
+      en: 'Moosy started from one sentence: don’t just have dreams, have plans for them. The app brings together the monthly balance, investments imported straight from B3 (the Brazilian stock exchange) and goals tied to real assets, with progress in real time. Everything can be shared with whoever manages the money with you, organized by account: Personal, Home, whatever you need. It is in invite-only beta, free for 30 days and then R$ 6.99 a month.',
     },
     role: {
-      pt: 'Arquitetura mobile, desenvolvimento e publicação',
-      en: 'Mobile architecture, development and release',
+      pt: 'Produto, arquitetura, back-end, app mobile e infraestrutura',
+      en: 'Product, architecture, back-end, mobile app and infrastructure',
     },
-    tags: ['React Native', 'TypeScript', 'Offline-first', 'Node.js', 'Push'],
+    tags: ['React Native', 'TypeScript', 'Node.js', 'B3', 'AWS', 'Terraform'],
     theme: { from: 'from-violet-400/20', to: 'to-fuchsia-500/5', ring: 'ring-violet-400/30' },
+    screenshots: [
+      { src: '/projects/moosy/landing.webp', alt: { pt: 'Imagem de apresentação do Moosy com a frase "Não tenha só sonhos, tenha planos para eles"', en: 'Moosy presentation image with the line "Don’t just have dreams, have plans for them"' } },
+      { src: '/projects/moosy/home.webp', kind: 'phone', alt: { pt: 'Tela inicial do app Moosy', en: 'Moosy app home screen' } },
+      { src: '/projects/moosy/goals.webp', kind: 'phone', alt: { pt: 'Tela de metas com progresso em tempo real', en: 'Goals screen with real-time progress' } },
+      { src: '/projects/moosy/balance.webp', kind: 'phone', alt: { pt: 'Tela de balanço mensal com receitas, despesas e recorrências', en: 'Monthly balance screen with income, expenses and recurring items' } },
+      { src: '/projects/moosy/investments.webp', kind: 'phone', alt: { pt: 'Tela de investimentos com ativos importados da B3', en: 'Investments screen with assets imported from B3' } },
+    ],
     context: {
-      pt: 'O fluxo que o Moosy resolve acontecia no celular, mas fora do software: mensagem, foto e anotação solta. Nada ficava registrado de forma consultável, e quem precisava do histórico depois tinha que reconstruir a partir de conversa. O app existe para transformar essa rotina em dado.',
-      en: 'The flow Moosy handles already happened on the phone, just outside any software: messages, photos and loose notes. Nothing was recorded in a queryable way, and whoever needed the history later had to reconstruct it from chat threads. The app exists to turn that routine into data.',
+      pt: 'A maioria dos apps de finanças resolve uma parte do problema: um controla gastos, outro acompanha a carteira, e a meta fica em uma planilha. Quem divide as contas com alguém ainda precisa juntar tudo isso em conversa. O Moosy foi desenhado para uma pessoa, ou um casal, ver em uma tela quanto entrou, quanto saiu, quanto está investido e quanto falta para cada objetivo. Os investimentos vêm da B3, com cotação em tempo real, preço médio e dividendos por data-com. As metas apontam para ativos de verdade, então o progresso não depende de alguém atualizar um número à mão.',
+      en: 'Most finance apps solve one part of the problem: one tracks spending, another follows the portfolio, and the goal lives in a spreadsheet. Anyone who shares expenses with someone still has to stitch all of that together in conversation. Moosy was designed so a person, or a couple, can see on one screen what came in, what went out, what is invested and how much is left for each goal. Investments come from B3 with real-time quotes, average price and dividends by ex-date. Goals point to real assets, so progress does not depend on someone updating a number by hand.',
     },
     challenges: {
       pt: [
-        'Funcionar sem rede: registrar, editar e consultar offline, e reconciliar depois sem duplicar nem perder registro.',
-        'Manter listas longas fluidas em aparelhos Android modestos, que são a maioria da base.',
-        'Compartilhar as regras de negócio com a API sem duplicar validação em duas bases de código.',
-        'Publicar nas lojas com um processo repetível: build assinado, versionamento e changelog.',
+        'Importar ativos da B3 e manter cotação, preço médio e dividendos corretos para ações, FIIs, renda fixa e cripto.',
+        'Ligar metas a ativos reais e recalcular o progresso sempre que a carteira ou o saldo muda.',
+        'Modelar contas compartilhadas com permissões por participante, sem misturar o que é pessoal com o que é da casa.',
+        'Tratar dado financeiro com privacidade como regra: nada vendido, nada exposto, termos e política publicados desde o beta.',
+        'Entregar um app mobile, uma API, uma landing page e a infraestrutura com uma pessoa, reaproveitando a base construída para o YellowJobs.',
       ],
       en: [
-        'Working offline: create, edit and browse with no network, then reconcile without duplicating or losing records.',
-        'Keeping long lists smooth on modest Android devices, which make up most of the base.',
-        'Sharing business rules with the API without duplicating validation across two codebases.',
-        'Shipping to the stores with a repeatable process: signed builds, versioning and changelog.',
+        'Importing assets from B3 and keeping quotes, average price and dividends correct for stocks, REITs, fixed income and crypto.',
+        'Tying goals to real assets and recomputing progress whenever the portfolio or the balance changes.',
+        'Modeling shared accounts with per-participant permissions, without mixing what is personal with what belongs to the household.',
+        'Treating financial data with privacy as the rule: nothing sold, nothing exposed, terms and policy published from the beta on.',
+        'Shipping a mobile app, an API, a landing page and the infrastructure with one person, reusing the foundation built for YellowJobs.',
       ],
     },
     approach: [
       {
-        title: { pt: 'Offline-first de verdade', en: 'Genuinely offline-first' },
+        title: { pt: 'Quatro módulos, uma tela por dia', en: 'Four modules, one screen a day' },
         body: {
-          pt: 'A UI nunca lê da rede. Ela lê do armazenamento local, que é atualizado por um sincronizador. Cada registro carrega estado de sincronização e carimbo de tempo; o conflito é resolvido por regra explícita, não por “o último que chegou ganha” silencioso. O usuário vê um indicador honesto de pendência.',
-          en: 'The UI never reads from the network. It reads from local storage, which a synchronizer updates. Every record carries a sync state and a timestamp; conflicts resolve through an explicit rule, not a silent last-write-wins. The user sees an honest pending indicator.',
+          pt: 'O produto foi organizado em quatro módulos que aparecem na ordem em que a pessoa pensa no dinheiro. Metas: cada objetivo vinculado a ativos, com progresso em tempo real. Balanço mensal: receitas, despesas e recorrências, com o gráfico da evolução do saldo. Investimentos: ativos importados da B3, cotação ao vivo, preço médio e dividendos por data-com. Contas compartilhadas: participantes convidados por e-mail, organizados por conta. A interface foi desenhada para ser aberta todo dia, então é limpa e objetiva por decisão, não por falta de tempo.',
+          en: 'The product is organized into four modules in the order people think about money. Goals: each objective tied to assets, with real-time progress. Monthly balance: income, expenses and recurring items, with a chart of how the balance evolves. Investments: assets imported from B3, live quotes, average price and dividends by ex-date. Shared accounts: participants invited by e-mail, organized by account. The interface was designed to be opened every day, so it is clean and direct by decision, not for lack of time.',
         },
       },
       {
-        title: { pt: 'Fila de operações idempotente', en: 'Idempotent operation queue' },
+        title: { pt: 'App mobile em React Native', en: 'Mobile app in React Native' },
         body: {
-          pt: 'Ações offline entram numa fila persistente com id gerado no cliente. Quando a rede volta, a fila drena em ordem e a API trata id repetido como no-op. Isso torna o retry seguro, e retry acontece o tempo todo em rede móvel.',
-          en: 'Offline actions enter a persistent queue with a client-generated id. When the network returns, the queue drains in order and the API treats a repeated id as a no-op. That makes retries safe, and on mobile networks retries happen constantly.',
+          pt: 'O app foi construído em React Native com TypeScript, com uma base de código para iOS e Android. A navegação segue os quatro módulos, e cada tela mostra o essencial primeiro: o número que importa, depois o detalhe. O back-end em Node.js e TypeScript expõe a API que o app consome, cuida da importação da B3, do cálculo de progresso das metas e das permissões das contas compartilhadas.',
+          en: 'The app was built in React Native with TypeScript, from one codebase for iOS and Android. Navigation follows the four modules, and each screen shows the essential first: the number that matters, then the detail. The Node.js and TypeScript back-end exposes the API the app consumes and handles the B3 import, goal progress calculation and shared-account permissions.',
         },
       },
       {
-        title: { pt: 'Performance como requisito, não polimento', en: 'Performance as a requirement, not polish' },
+        title: { pt: 'Spec primeiro, agentes depois', en: 'Spec first, agents second' },
         body: {
-          pt: 'Listas virtualizadas com altura conhecida, memoização nos itens, imagens redimensionadas antes do upload e navegação sem re-render em cascata. O alvo foi manter interação fluida no aparelho mais fraco da base, não no aparelho do desenvolvedor.',
-          en: 'Virtualized lists with known item height, memoized rows, images resized before upload and navigation free of cascading re-renders. The target was smooth interaction on the weakest device in the base, not on the developer’s phone.',
+          pt: 'Assim como no YellowJobs, cada funcionalidade começou como especificação. Para um produto financeiro isso pesa mais: a regra de cálculo de preço médio, o tratamento de um dividendo ou o que acontece quando um participante sai de uma conta compartilhada precisam estar escritos antes de virar código. A spec serviu de contrato para os agentes de IA e de base para os testes que protegem essas regras.',
+          en: 'As with YellowJobs, every feature started as a specification. For a financial product that matters more: the average-price rule, how a dividend is handled or what happens when a participant leaves a shared account have to be written down before they become code. The spec served as the contract for the AI agents and as the basis for the tests that protect those rules.',
         },
       },
       {
-        title: { pt: 'Regras no servidor, feedback no cliente', en: 'Rules on the server, feedback on the client' },
+        title: { pt: 'Agentes especializados, revisão minha', en: 'Specialized agents, my review' },
         body: {
-          pt: 'A validação canônica mora na API, em TypeScript compartilhado por tipos. O app valida por antecipação para dar feedback imediato, mas nunca é a autoridade. Isso evita divergência entre o que o app aceita e o que o servidor grava.',
-          en: 'Canonical validation lives in the API, in TypeScript shared through types. The app validates optimistically for instant feedback but is never the authority. That prevents drift between what the app accepts and what the server stores.',
+          pt: 'O fluxo multiagente aqui incluiu um agente mobile em React Native, além dos de produto, back-end, infraestrutura, qualidade e escrita. Cada um recebe a spec e trabalha dentro das convenções da sua área. A arquitetura, a revisão do que cada agente entrega e a decisão de quando algo está pronto para produção continuam comigo.',
+          en: 'The multi-agent flow here included a React Native mobile agent alongside the product, back-end, infrastructure, quality and writing agents. Each one takes the spec and works within the conventions of its area. Architecture, reviewing what each agent delivers and deciding when something is ready for production stay with me.',
         },
       },
       {
-        title: { pt: 'Release repetível', en: 'Repeatable release' },
+        title: { pt: 'A mesma base de infraestrutura do YellowJobs', en: 'The same infrastructure foundation as YellowJobs' },
         body: {
-          pt: 'Build de release automatizado, versionamento semântico amarrado ao changelog e canal de teste interno antes de qualquer publicação ampla. Subir versão deixou de ser um evento.',
-          en: 'Automated release builds, semantic versioning tied to the changelog, and an internal test track before any wide rollout. Shipping a version stopped being an event.',
+          pt: 'O Moosy roda sobre a camada de infraestrutura compartilhada criada com Terraform: rede, cluster, DNS, certificados e segredos são os mesmos módulos, com o que é específico do produto por cima. Isso encurtou o tempo até o primeiro deploy e faz uma melhoria de base valer para os dois produtos. A landing page e os recursos estáticos ficam em S3 e são servidos pelo CloudFront.',
+          en: 'Moosy runs on the shared infrastructure layer built with Terraform: network, cluster, DNS, certificates and secrets are the same modules, with what is product-specific on top. That shortened the time to first deploy and makes a foundation improvement count for both products. The landing page and static assets live on S3 and are served through CloudFront.',
+        },
+      },
+      {
+        title: { pt: 'Pipeline, testes e métricas de produto', en: 'Pipeline, tests and product metrics' },
+        body: {
+          pt: 'Cada mudança passa pelo pipeline de CI/CD, com testes automatizados nas regras financeiras antes de qualquer publicação. Em operação, logs, métricas e alertas acompanham a saúde da API e da importação da B3. As métricas de produto medem o que interessa para um app de uso diário: contas criadas, metas ativas, importações concluídas, participantes convidados. É o que orienta o que entra na próxima versão.',
+          en: 'Every change goes through the CI/CD pipeline, with automated tests on the financial rules before anything is published. In operation, logs, metrics and alerts follow the health of the API and of the B3 import. Product metrics measure what matters for a daily-use app: accounts created, active goals, completed imports, invited participants. That is what guides what goes into the next version.',
+        },
+      },
+      {
+        title: { pt: 'Identidade e landing page', en: 'Identity and landing page' },
+        body: {
+          pt: 'A identidade visual do Moosy foi criada do zero, com tom mais leve do que o do YellowJobs, para um produto que a pessoa abre todo dia. A landing page é bilíngue, com foco em performance, metadados, Open Graph e URLs canônicas por idioma, e apresenta os quatro módulos com telas reais do app. Termos de serviço e política de privacidade estão publicados desde o beta, com a promessa clara de que os dados são do usuário e não são vendidos.',
+          en: 'Moosy’s visual identity was created from scratch, lighter in tone than YellowJobs, for a product people open every day. The landing page is bilingual, with a focus on performance, metadata, Open Graph and per-language canonical URLs, and presents the four modules with real app screens. Terms of service and privacy policy have been published since the beta, with a clear promise that the data belongs to the user and is never sold.',
         },
       },
     ],
     architecture: [
-      { layer: { pt: 'Apresentação', en: 'Presentation' }, detail: { pt: 'Telas React Native com React Navigation; componentes sem acesso direto a rede.', en: 'React Native screens with React Navigation; components never touch the network directly.' } },
-      { layer: { pt: 'Estado', en: 'State' }, detail: { pt: 'Store tipada como espelho do cache local, com seletores memoizados.', en: 'Typed store mirroring the local cache, with memoized selectors.' } },
-      { layer: { pt: 'Persistência local', en: 'Local persistence' }, detail: { pt: 'Armazenamento no dispositivo + fila de operações pendentes com id de cliente.', en: 'On-device storage + pending-operation queue with client-side ids.' } },
-      { layer: { pt: 'Sincronização', en: 'Sync' }, detail: { pt: 'Sincronizador em segundo plano, com backoff exponencial e resolução de conflito explícita.', en: 'Background synchronizer with exponential backoff and explicit conflict resolution.' } },
-      { layer: { pt: 'API', en: 'API' }, detail: { pt: 'Node.js + TypeScript, endpoints idempotentes e notificações push.', en: 'Node.js + TypeScript, idempotent endpoints and push notifications.' } },
+      { layer: { pt: 'App mobile', en: 'Mobile app' }, detail: { pt: 'React Native e TypeScript, uma base para iOS e Android. Quatro módulos: metas, balanço, investimentos e contas compartilhadas.', en: 'React Native and TypeScript, one codebase for iOS and Android. Four modules: goals, balance, investments and shared accounts.' } },
+      { layer: { pt: 'API', en: 'API' }, detail: { pt: 'Node.js e TypeScript. Importação da B3, cotações, preço médio, dividendos, progresso de metas e permissões por conta.', en: 'Node.js and TypeScript. B3 import, quotes, average price, dividends, goal progress and per-account permissions.' } },
+      { layer: { pt: 'Integração B3', en: 'B3 integration' }, detail: { pt: 'Importação dos ativos do investidor e atualização de cotação em tempo real para ações, FIIs, renda fixa e cripto.', en: 'Import of the investor’s assets and real-time quote updates for stocks, REITs, fixed income and crypto.' } },
+      { layer: { pt: 'Landing page', en: 'Landing page' }, detail: { pt: 'Estática, bilíngue, hospedada em S3 e servida pelo CloudFront, com metadados e Open Graph por idioma.', en: 'Static, bilingual, hosted on S3 and served through CloudFront, with per-language metadata and Open Graph.' } },
+      { layer: { pt: 'Infraestrutura compartilhada', en: 'Shared infrastructure' }, detail: { pt: 'Módulos Terraform de rede, cluster, DNS, certificados e segredos, compartilhados com o YellowJobs.', en: 'Terraform modules for network, cluster, DNS, certificates and secrets, shared with YellowJobs.' } },
+      { layer: { pt: 'Entrega e operação', en: 'Delivery and operations' }, detail: { pt: 'Pipeline de CI/CD com testes das regras financeiras. Logs, métricas, alertas e métricas de produto.', en: 'CI/CD pipeline with tests on the financial rules. Logs, metrics, alerts and product metrics.' } },
     ],
     stack: [
-      { group: { pt: 'Mobile', en: 'Mobile' }, items: ['React Native', 'TypeScript', 'React Navigation', 'Push notifications'] },
-      { group: { pt: 'Back-end', en: 'Back-end' }, items: ['Node.js', 'TypeScript', 'Express', 'MongoDB'] },
-      { group: { pt: 'Qualidade', en: 'Quality' }, items: ['Jest', 'React Native Testing Library'] },
+      { group: { pt: 'Mobile', en: 'Mobile' }, items: ['React Native', 'TypeScript'] },
+      { group: { pt: 'Back-end', en: 'Back-end' }, items: ['Node.js', 'TypeScript', 'Integração B3'] },
+      { group: { pt: 'Infra', en: 'Infra' }, items: ['AWS', 'Terraform', 'S3', 'CloudFront', 'CI/CD'] },
+      { group: { pt: 'Operação', en: 'Operations' }, items: ['Logs', 'Métricas', 'Alertas', 'Métricas de produto'] },
+      { group: { pt: 'Método', en: 'Method' }, items: ['Spec-Driven Development', 'Multiagentes', 'Claude Code'] },
     ],
-    // TODO: replace with the project's real numbers.
     results: [
-      { value: '0', label: { pt: 'telas que dependem de rede para abrir', en: 'screens that need the network to open' } },
-      { value: 'iOS + Android', label: { pt: 'a partir de uma base de código', en: 'from a single codebase' } },
-      { value: '?', label: { pt: 'TODO: usuários ativos ou volume de registros', en: 'TODO: active users or record volume' } },
+      { value: '4', label: { pt: 'módulos: metas, balanço, investimentos e contas compartilhadas', en: 'modules: goals, balance, investments and shared accounts' } },
+      { value: 'B3', label: { pt: 'importação de ativos com cotação em tempo real', en: 'asset import with real-time quotes' } },
+      { value: 'iOS + Android', label: { pt: 'a partir de uma base de código em React Native', en: 'from a single React Native codebase' } },
     ],
     learnings: {
       pt: [
-        'Offline-first é decisão de arquitetura, não uma camada que se adiciona depois. Retrofitar cache num app online-first custa mais que reescrever.',
-        'Idempotência no servidor é o que torna o cliente móvel simples: sem ela, toda retentativa vira uma regra de negócio nova.',
+        'Ligar metas a ativos reais mudou o produto. Progresso calculado a partir da carteira é mais honesto do que um número que alguém precisa lembrar de atualizar.',
+        'Regras financeiras pedem spec escrita e teste automatizado antes do código. Foi onde o Spec-Driven Development mais se pagou.',
+        'Reaproveitar a infraestrutura do YellowJobs deu ao Moosy um primeiro deploy rápido e uma base que melhora para os dois quando melhora para um.',
+        'Um app de uso diário precisa de interface calma. Cada tela que tentou mostrar tudo perdeu para a que mostrou o número certo.',
       ],
       en: [
-        'Offline-first is an architectural decision, not a layer you bolt on later. Retrofitting a cache into an online-first app costs more than a rewrite.',
-        'Server-side idempotency is what keeps the mobile client simple: without it, every retry becomes a new business rule.',
+        'Tying goals to real assets changed the product. Progress computed from the portfolio is more honest than a number someone has to remember to update.',
+        'Financial rules call for a written spec and automated tests before the code. That is where Spec-Driven Development paid off the most.',
+        'Reusing YellowJobs’ infrastructure gave Moosy a fast first deploy and a foundation that improves for both when it improves for one.',
+        'A daily-use app needs a calm interface. Every screen that tried to show everything lost to the one that showed the right number.',
       ],
     },
   },

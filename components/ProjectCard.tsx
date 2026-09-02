@@ -2,17 +2,25 @@ import Link from 'next/link';
 import type { Lang, Project } from '@/content/site';
 import { ui } from '@/content/ui';
 import { to } from '@/lib/i18n';
+import { BASE_PATH } from '@/lib/config';
 
 export function ProjectCard({ project, lang, index }: { project: Project; lang: Lang; index: number }) {
   const href = to(`/projects/${project.slug}`, lang);
+  const wide = project.screenshots?.filter((s) => s.kind !== 'phone') ?? [];
+  const cover = wide.find((s) => s.cover) ?? wide[0];
 
   return (
-    <article className={`card group relative flex h-full flex-col overflow-hidden p-6 hover:border-ink-300 sm:p-8 dark:hover:border-white/20 ${project.theme.ring}`}>
+    <article className={`card group relative flex h-full flex-col overflow-hidden hover:border-ink-300 dark:hover:border-white/20 ${project.theme.ring}`}>
+      {cover && (
+        <div className="aspect-video overflow-hidden border-b border-ink-200/70 dark:border-white/10">
+          <img src={`${BASE_PATH}${cover.src}`} alt={cover.alt[lang]} loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]" />
+        </div>
+      )}
       <div
         aria-hidden
         className={`pointer-events-none absolute inset-x-0 -top-24 h-48 bg-gradient-to-b ${project.theme.from} ${project.theme.to} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
       />
-      <div className="relative flex h-full flex-col">
+      <div className="relative flex h-full flex-col p-6 sm:p-8">
         <div className="flex items-baseline justify-between gap-3">
           <span className="eyebrow whitespace-nowrap">
             {String(index + 1).padStart(2, '0')} · {project.year}

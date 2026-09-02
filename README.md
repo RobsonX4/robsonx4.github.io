@@ -71,7 +71,7 @@ To add a project, append an object to the `projects` array. The listing, the hom
 
 ### Provenance
 
-Profile, experience, education and the Gerencert case were confirmed against LinkedIn on 2026-08-31. The YellowJobs and Moosy cases are drafts and are marked with `TODO:` in `content/site.ts`; their result figures are placeholders (`?`) and are hidden from the UI until filled in.
+Profile, experience, education and the Gerencert case were confirmed against LinkedIn on 2026-08-31. The YellowJobs and Moosy cases use product facts published on yellowjobs.com.br and moosy.app (read on 2026-09-02) plus the engineering narrative provided by the author. Product screens under `public/projects/` come from those sites.
 
 ### Generated images
 

@@ -6,6 +6,7 @@ import { ui } from '@/content/ui';
 import { ogImage } from '@/lib/config';
 import { isLang, to } from '@/lib/i18n';
 import { Reveal } from '@/components/Reveal';
+import { Gallery } from '@/components/Gallery';
 
 export function generateStaticParams() {
   return LANGS.flatMap((lang) => projects.map((p) => ({ lang, slug: p.slug })));
@@ -124,6 +125,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ lang: 
           <p className="max-w-prose text-lg leading-relaxed text-ink-700 dark:text-ink-200">{project.summary[lang]}</p>
           <p className="prose-body mt-5 max-w-prose">{project.context[lang]}</p>
         </Block>
+
+        {/* ── Product screens ────────────────────────────────────────────── */}
+        {project.screenshots && project.screenshots.length > 0 && (
+          <Block label={ui.project.screens[lang]}>
+            <Gallery shots={project.screenshots} lang={lang} />
+          </Block>
+        )}
 
         {/* ── Challenges ─────────────────────────────────────────────────── */}
         <Block label={ui.project.challenges[lang]}>

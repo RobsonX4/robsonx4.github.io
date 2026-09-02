@@ -2,15 +2,23 @@ import Link from 'next/link';
 import type { Lang, Project } from '@/content/site';
 import { ui } from '@/content/ui';
 import { to } from '@/lib/i18n';
+import { BASE_PATH } from '@/lib/config';
 
 /** Editorial row for the projects listing: copy on the left, results panel on the right. */
 export function ProjectRow({ project, lang, index }: { project: Project; lang: Lang; index: number }) {
   const href = to(`/projects/${project.slug}`, lang);
   const results = project.results.filter((r) => r.value !== '?').slice(0, 3);
   const n = String(index + 1).padStart(2, '0');
+  const wide = project.screenshots?.filter((s) => s.kind !== 'phone') ?? [];
+  const cover = wide.find((s) => s.cover) ?? wide[0];
 
   return (
     <article className={`card group relative overflow-hidden transition-shadow hover:ring-1 ${project.theme.ring}`}>
+      {cover && (
+        <div className="aspect-[16/6] overflow-hidden border-b border-ink-200/70 dark:border-white/10">
+          <img src={`${BASE_PATH}${cover.src}`} alt={cover.alt[lang]} loading="lazy" decoding="async" className="h-full w-full object-cover object-center" />
+        </div>
+      )}
       <div className="grid lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="relative p-7 sm:p-10">
           <div className="flex flex-wrap items-center gap-3">

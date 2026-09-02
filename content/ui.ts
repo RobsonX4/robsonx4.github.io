@@ -51,6 +51,7 @@ export const ui = {
     role: { pt: 'Meu papel', en: 'My role' } as L,
     year: { pt: 'Período', en: 'Period' } as L,
     context: { pt: 'O contexto', en: 'The context' } as L,
+    screens: { pt: 'O produto', en: 'The product' } as L,
     challenges: { pt: 'Os desafios', en: 'The challenges' } as L,
     approach: { pt: 'Como foi feito', en: 'How it was built' } as L,
     architecture: { pt: 'Arquitetura', en: 'Architecture' } as L,
