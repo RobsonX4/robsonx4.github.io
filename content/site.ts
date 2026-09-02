@@ -294,13 +294,13 @@ export type Project = {
 export const projects: Project[] = [
   /* ═══════════════════════════════ Gerencert ═══════════════════════════════
    * Product and results confirmed from LinkedIn; technical detail from the
-   * project's own documentation (monorepo README, per-service CLAUDE.md,
+   * project's own documentation (per-service README and CLAUDE.md,
    * specs/ and infra/), read on 2026-09-02.
    * ═════════════════════════════════════════════════════════════════════════ */
   {
     slug: 'gerencert',
     name: 'Gerencert',
-    year: '2019 →',
+    year: '2017 →',
     status: { pt: 'Cofundador', en: 'Co-founder' },
     url: 'https://gerencert.com',
     tagline: {
@@ -308,8 +308,8 @@ export const projects: Project[] = [
       en: 'Multi-tenant SaaS for selling, issuing and managing digital certificates, used by registration authorities across Brazil.',
     },
     summary: {
-      pt: 'Emitir um certificado digital envolve conferência de documento, consulta ao SPC, agendamento, videoconferência de validação, cobrança e comissionamento do parceiro. Nas autoridades de registro isso era feito em planilha, sistema de terceiro e WhatsApp, e cada atendimento de venda levava cerca de 8 minutos. O Gerencert reorganizou o fluxo inteiro e derrubou o tempo para 40 segundos. O produto começou como um MVP em 2019 e continua em evolução: hoje são sete serviços em produção sobre uma fundação de infraestrutura em Terraform, com observabilidade, métricas de negócio e um fluxo de desenvolvimento conduzido por especificações e agentes de IA.',
-      en: 'Issuing a digital certificate involves document checks, a credit-bureau lookup, scheduling, a validation video call, billing and partner commissioning. At registration authorities all of that ran on spreadsheets, third-party systems and WhatsApp, and each sales interaction took around 8 minutes. Gerencert reorganized the whole flow and cut that to 40 seconds. The product started as an MVP in 2019 and keeps evolving: today it is seven services in production on a Terraform infrastructure foundation, with observability, business metrics and a development flow driven by specifications and AI agents.',
+      pt: 'Emitir um certificado digital envolve conferência de documento, consulta ao SPC, agendamento, videoconferência de validação, cobrança e comissionamento do parceiro. Nas autoridades de registro isso era feito em planilha, sistema de terceiro e WhatsApp, e cada atendimento de venda levava cerca de 8 minutos. O Gerencert reorganizou o fluxo inteiro e derrubou o tempo para 40 segundos. O MVP foi entregue em 2017. Em 2019 o produto ganhou continuidade e virou um SaaS, para ser comercializado com outras empresas do setor. Hoje são sete serviços em produção sobre uma fundação de infraestrutura em Terraform, com observabilidade, métricas de negócio e um fluxo de desenvolvimento conduzido por especificações e agentes de IA.',
+      en: 'Issuing a digital certificate involves document checks, a credit-bureau lookup, scheduling, a validation video call, billing and partner commissioning. At registration authorities all of that ran on spreadsheets, third-party systems and WhatsApp, and each sales interaction took around 8 minutes. Gerencert reorganized the whole flow and cut that to 40 seconds. The MVP shipped in 2017. In 2019 the product was taken further and turned into a SaaS, to be sold to other companies in the sector. Today it is seven services in production on a Terraform infrastructure foundation, with observability, business metrics and a development flow driven by specifications and AI agents.',
     },
     role: {
       pt: 'Cofundador, arquitetura, desenvolvimento full-stack e infraestrutura',
@@ -331,7 +331,7 @@ export const projects: Project[] = [
         'Encurtar drasticamente o atendimento de venda sem perder nenhum dado exigido pelo processo de emissão.',
         'Calcular comissionamento de uma rede de parceiros de forma automática e auditável, com isolamento por empresa e ponto de atendimento.',
         'Cobrar de verdade: pagamento por múltiplos gateways brasileiros, cada um com sua idiossincrasia, e depois assinatura recorrente do próprio SaaS.',
-        'Sair de um servidor EC2 com deploy por SSH para uma infraestrutura descrita em código, sem parar a operação de quem já usava.',
+        'Sair de uma única máquina com contêineres para uma plataforma com escala automática e infraestrutura descrita em código, sem parar a operação de quem já usava.',
         'Enxergar o negócio: métricas de produto e KPIs de SaaS sem montar um pipeline de dados nem pagar por ingestão de métricas.',
         'Manter e evoluir sete serviços, incluindo um front-end em AngularJS, com um time de fundadores e sem equipe dedicada de infraestrutura.',
       ],
@@ -339,7 +339,7 @@ export const projects: Project[] = [
         'Cutting sales handling time drastically without losing any data the issuance process requires.',
         'Computing partner-network commissions automatically and auditably, isolated per company and service point.',
         'Actually collecting money: payments through several Brazilian gateways, each with its own quirks, and later recurring subscriptions for the SaaS itself.',
-        'Moving from an EC2 box deployed over SSH to infrastructure described as code, without stopping the operation already running on it.',
+        'Moving from a single container host to a platform with autoscaling and infrastructure described as code, without stopping the operation already running on it.',
         'Seeing the business: product metrics and SaaS KPIs without building a data pipeline or paying for metric ingestion.',
         'Maintaining and evolving seven services, including an AngularJS front-end, with a founding team and no dedicated infrastructure crew.',
       ],
@@ -353,10 +353,10 @@ export const projects: Project[] = [
         },
       },
       {
-        title: { pt: 'Sete serviços que só se falam por HTTP', en: 'Seven services that only talk over HTTP' },
+        title: { pt: 'Sete serviços com responsabilidades separadas', en: 'Seven services with separate responsibilities' },
         body: {
-          pt: 'O sistema é um monorepo com sete peças: a aplicação web usada pelas autoridades de registro, a API principal, a API e o iframe do widget de venda embarcado em sites de parceiros, a API de pagamentos e assinaturas, o portal de agenda online e as funções de emissão. A regra que mais protegeu o projeto foi simples: nenhum serviço lê o banco do outro, toda comunicação passa por HTTP. Isso permitiu evoluir o widget e o pagamento sem tocar no núcleo, e é o que torna possível trocar uma peça de cada vez.',
-          en: 'The system is a monorepo with seven pieces: the web app used by registration authorities, the main API, the API and iframe of the sales widget partners embed on their sites, the payments and subscriptions API, the online scheduling portal and the issuance functions. The rule that protected the project most was simple: no service reads another’s database, all communication goes over HTTP. That made it possible to evolve the widget and payments without touching the core, and it is what lets one piece be replaced at a time.',
+          pt: 'O sistema é um conjunto de microserviços que conversam entre si, cada um com uma responsabilidade clara: a aplicação web usada pelas autoridades de registro, a API principal, a API e o iframe do widget de venda embarcado em sites de parceiros, a API de pagamentos e assinaturas, o portal de agenda online e as funções de emissão. A separação foi feita para facilitar manutenção: dá para evoluir o widget ou o pagamento sem tocar no núcleo, e para trocar uma peça de cada vez sem parar as outras.',
+          en: 'The system is a set of microservices that talk to each other, each with a clear responsibility: the web app used by registration authorities, the main API, the API and iframe of the sales widget partners embed on their sites, the payments and subscriptions API, the online scheduling portal and the issuance functions. The split was made to keep maintenance manageable: the widget or payments can evolve without touching the core, and one piece can be replaced at a time without stopping the others.',
         },
       },
       {
@@ -367,10 +367,10 @@ export const projects: Project[] = [
         },
       },
       {
-        title: { pt: 'Do EC2 para uma fundação em Terraform', en: 'From an EC2 box to a Terraform foundation' },
+        title: { pt: 'De uma máquina com contêineres ao ECS com escala automática', en: 'From one container host to ECS with autoscaling' },
         body: {
-          pt: 'O sistema nasceu em um servidor EC2 com deploy por SSH. A migração foi feita como uma fundação compartilhada descrita em Terraform: VPC com sub-redes públicas e privadas em duas zonas, saída por uma instância NAT pequena com IP fixo, cluster ECS, balanceador interno único com um alvo por serviço, API Gateway por serviço com domínio próprio e parâmetros no SSM. Os front-ends foram para S3 servido por CloudFront. Cada serviço tem seus próprios módulos por cima da fundação, e nada é criado à mão no console. A troca de DNS do servidor antigo para o CDN levou poucos segundos de indisponibilidade.',
-          en: 'The system started on an EC2 box deployed over SSH. The migration was done as a shared foundation described in Terraform: a VPC with public and private subnets across two zones, egress through a small NAT instance with a fixed IP, an ECS cluster, a single internal load balancer with one target per service, an API Gateway per service with its own domain, and parameters in SSM. Front-ends moved to S3 served by CloudFront. Each service has its own modules on top of the foundation, and nothing is created by hand in the console. Switching DNS from the old server to the CDN cost a couple of seconds of downtime.',
+          pt: 'Para validar o produto sem gastar com plataforma, tudo rodou primeiro em uma única máquina EC2 com um contêiner Docker por serviço. Isso segurou a operação enquanto o negócio se provava. Com a tração, a infraestrutura foi descrita em Terraform e migrada para ECS com escala automática: VPC com sub-redes públicas e privadas em duas zonas, saída por uma instância NAT pequena com IP fixo, balanceador interno único com um alvo por serviço, API Gateway por serviço com domínio próprio e parâmetros no SSM. Os front-ends foram para S3 servido por CloudFront. A estratégia de publicação foi escolhida para o menor tempo de indisponibilidade possível: a nova versão sobe e passa no teste de saúde antes de a antiga sair, e a troca de DNS do servidor antigo para o CDN custou poucos segundos.',
+          en: 'To validate the product without paying for a platform, everything first ran on a single EC2 machine with one Docker container per service. That carried the operation while the business proved itself. Once there was traction, the infrastructure was described in Terraform and moved to ECS with autoscaling: a VPC with public and private subnets across two zones, egress through a small NAT instance with a fixed IP, a single internal load balancer with one target per service, an API Gateway per service with its own domain, and parameters in SSM. Front-ends moved to S3 served by CloudFront. The rollout strategy was chosen for the smallest possible downtime: the new version comes up and passes its health check before the old one goes away, and switching DNS from the old server to the CDN cost a couple of seconds.',
         },
       },
       {
@@ -456,7 +456,7 @@ export const projects: Project[] = [
     learnings: {
       pt: [
         'Ganho de eficiência quase nunca está no código. O nosso veio de tirar etapas do processo, não de otimizar o que já existia.',
-        'Monolito primeiro foi a decisão certa. Separar em serviços antes de haver tração é custo operacional sem receita que o pague.',
+        'Validar em uma máquina só, com um contêiner por serviço, foi o que permitiu separar responsabilidades desde cedo sem pagar por plataforma antes de haver receita.',
         'Integração de pagamento precisa de abstração desde o primeiro gateway, porque o segundo sempre chega, e sempre chega com pressa.',
         'Painel que calcula na hora de abrir resolveu observabilidade sem pipeline de dados nem conta de ingestão. Para um SaaS pequeno, é a escolha que cabe.',
         'Especificar antes de implementar foi o que tornou os agentes de IA úteis em um sistema com sete anos de história. Sem spec, o agente acerta o arquivo e erra a regra.',
@@ -464,7 +464,7 @@ export const projects: Project[] = [
       ],
       en: [
         'Efficiency gains are almost never in the code. Ours came from removing process steps, not from optimizing what was already there.',
-        'Monolith first was the right call. Splitting into services before traction is operational cost with no revenue to pay for it.',
+        'Validating on a single machine, with one container per service, is what allowed responsibilities to be split early without paying for a platform before there was revenue.',
         'Payment integration needs an abstraction from the very first gateway, because the second one always arrives, and it always arrives in a hurry.',
         'A dashboard that computes on read solved observability with no data pipeline and no ingestion bill. For a small SaaS, that is the choice that fits.',
         'Specifying before implementing is what made AI agents useful in a system with seven years of history. Without a spec, the agent gets the file right and the rule wrong.',
