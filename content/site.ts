@@ -1,15 +1,15 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- *  FONTE ÚNICA DE CONTEÚDO DO SITE  ·  SINGLE SOURCE OF CONTENT
+ *  SINGLE SOURCE OF CONTENT
  * ─────────────────────────────────────────────────────────────────────────────
- *  Todo o texto do site vive aqui, em PT e EN. Nenhum componente tem copy
- *  hardcoded: para mudar o site, mude este arquivo.
+ *  All site copy lives here, in PT and EN. No component has hardcoded copy:
+ *  to change the site, change this file.
  *
- *  PROCEDÊNCIA DO CONTEÚDO
- *   ✔ perfil, experiência, formação e o case do Gerencert vieram do seu
- *     LinkedIn (linkedin.com/in/robsoncsouza), lido em 31/08/2026.
- *   ⚠ YellowJobs e Moosy NÃO estão no LinkedIn. Os cases desses dois são
- *     rascunho meu e estão marcados com "TODO:". Revise antes de publicar.
+ *  CONTENT PROVENANCE
+ *   ✔ Profile, experience, education and the Gerencert case come from
+ *     LinkedIn (linkedin.com/in/robsoncsouza), as of 2026-08-31.
+ *   ⚠ YellowJobs and Moosy are NOT on LinkedIn. Those two cases are drafts
+ *     and are marked with "TODO:". Review before treating them as fact.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -17,7 +17,7 @@ export const LANGS = ['pt', 'en'] as const;
 export type Lang = (typeof LANGS)[number];
 export type L<T = string> = Record<Lang, T>;
 
-/* ───────────────────────────────── perfil ───────────────────────────────── */
+/* ───────────────────────────────── profile ───────────────────────────────── */
 
 export type SkillIcon = 'server' | 'monitor' | 'cloud' | 'activity' | 'database' | 'sparkles' | 'layers';
 
@@ -25,7 +25,7 @@ export type SkillGroup = {
   group: L;
   icon: SkillIcon;
   items: string[];
-  /** Marca o grupo como stack principal (exibe um selo ao lado do título). */
+  /** Marks the group as the primary stack (renders a badge next to the title). */
   primary?: boolean;
 };
 
@@ -111,7 +111,7 @@ export const profile = {
   ] as SkillGroup[],
 };
 
-/* ────────────────────────── trajetória profissional ─────────────────────── */
+/* ────────────────────────── experience ─────────────────────── */
 
 export type Job = {
   company: string;
@@ -208,7 +208,7 @@ export type Education = {
   school: string;
   course: L;
   year: string;
-  /** Caminho em public/ do logo da instituição. */
+  /** Path under public/ to the institution logo. */
   logo: string;
   logoAlt: string;
 };
@@ -232,7 +232,7 @@ export const education: Education[] = [
 export type Certification = {
   name: string;
   issuer: string;
-  /** Caminho em public/ do badge oficial. */
+  /** Path under public/ to the official badge. */
   badge: string;
 };
 
@@ -244,12 +244,12 @@ export const certifications: Certification[] = [
   },
 ];
 
-/* ──────────────────────────────── projetos ──────────────────────────────── */
+/* ──────────────────────────────── projects ──────────────────────────────── */
 
 export type Project = {
   slug: string;
   name: string;
-  /** Mantenha neutro de idioma: aparece igual em PT e EN. */
+  /** Keep language-neutral: rendered as-is in PT and EN. */
   year: string;
   status: L;
   tagline: L;
@@ -270,7 +270,7 @@ export type Project = {
 
 export const projects: Project[] = [
   /* ═══════════════════════════════ Gerencert ═══════════════════════════════
-   * Conteúdo confirmado a partir do seu LinkedIn.
+   * Content confirmed from LinkedIn.
    * ═════════════════════════════════════════════════════════════════════════ */
   {
     slug: 'gerencert',
@@ -382,8 +382,8 @@ export const projects: Project[] = [
   },
 
   /* ═══════════════════════════════ YellowJobs ═══════════════════════════════
-   * TODO: este case é RASCUNHO, não estava no LinkedIn. Revise contexto,
-   * desafios, decisões e principalmente os números em `results`.
+   * TODO: this case is a DRAFT and was not on LinkedIn. Review context,
+   * challenges, decisions and, above all, the numbers in `results`.
    * ═════════════════════════════════════════════════════════════════════════ */
   {
     slug: 'yellowjobs',
@@ -471,7 +471,7 @@ export const projects: Project[] = [
       { group: { pt: 'Front-end', en: 'Front-end' }, items: ['React', 'TypeScript', 'Tailwind CSS'] },
       { group: { pt: 'Infra', en: 'Infra' }, items: ['Docker', 'Docker Compose', 'AWS', 'CI/CD'] },
     ],
-    // TODO: troque por números reais do projeto.
+    // TODO: replace with the project's real numbers.
     results: [
       { value: '1 tela', label: { pt: 'para concluir uma candidatura', en: 'to complete an application' } },
       { value: '?', label: { pt: 'TODO: latência da busca com filtros', en: 'TODO: filtered-search latency' } },
@@ -492,8 +492,8 @@ export const projects: Project[] = [
   },
 
   /* ═════════════════════════════════ Moosy ═════════════════════════════════
-   * TODO: este case é RASCUNHO, não estava no LinkedIn. Revise tudo,
-   * especialmente o que o Moosy realmente faz e os números em `results`.
+   * TODO: this case is a DRAFT and was not on LinkedIn. Review everything,
+   * especially what Moosy actually does and the numbers in `results`.
    * ═════════════════════════════════════════════════════════════════════════ */
   {
     slug: 'moosy',
@@ -581,7 +581,7 @@ export const projects: Project[] = [
       { group: { pt: 'Back-end', en: 'Back-end' }, items: ['Node.js', 'TypeScript', 'Express', 'MongoDB'] },
       { group: { pt: 'Qualidade', en: 'Quality' }, items: ['Jest', 'React Native Testing Library'] },
     ],
-    // TODO: troque por números reais do projeto.
+    // TODO: replace with the project's real numbers.
     results: [
       { value: '0', label: { pt: 'telas que dependem de rede para abrir', en: 'screens that need the network to open' } },
       { value: 'iOS + Android', label: { pt: 'a partir de uma base de código', en: 'from a single codebase' } },

@@ -48,7 +48,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           <Reveal delay={180}>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link
-                href={to('/projetos', lang)}
+                href={to('/projects', lang)}
                 className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-ink-800 dark:bg-white dark:text-ink-900 dark:hover:bg-ink-100"
               >
                 {ui.hero.cta[lang]}
@@ -71,8 +71,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </div>
       </section>
 
-      {/* ── Quem sou ─────────────────────────────────────────────────────── */}
-      <Section id="sobre" eyebrow={ui.nav.about[lang]} title={ui.sections.about[lang]}>
+      {/* ── About ────────────────────────────────────────────────────────── */}
+      <Section id="about" eyebrow={ui.nav.about[lang]} title={ui.sections.about[lang]}>
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-20">
           <div className="max-w-prose space-y-5">
             {profile.bio[lang].slice(0, 2).map((p, i) => (
@@ -80,7 +80,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
                 {p}
               </p>
             ))}
-            <Link href={to('/sobre', lang)} className="link-underline inline-block text-sm font-medium text-ink-900 dark:text-white">
+            <Link href={to('/about', lang)} className="link-underline inline-block text-sm font-medium text-ink-900 dark:text-white">
               {ui.nav.about[lang]} →
             </Link>
           </div>
@@ -101,9 +101,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         <StackGrid lang={lang} />
       </Section>
 
-      {/* ── Trabalhos selecionados ───────────────────────────────────────── */}
+      {/* ── Selected work ────────────────────────────────────────────────── */}
       <Section
-        id="projetos"
+        id="projects"
         eyebrow={ui.sections.portfolio[lang]}
         title={ui.sections.selectedWork[lang]}
         subtitle={ui.sections.selectedWorkSub[lang]}

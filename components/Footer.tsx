@@ -67,10 +67,10 @@ export function Footer({ lang }: { lang: Lang }) {
 
         <div className="flex flex-col gap-3 text-sm sm:items-end">
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link href={to('/projetos', lang)} className="link-underline text-ink-600 dark:text-ink-300">
+            <Link href={to('/projects', lang)} className="link-underline text-ink-600 dark:text-ink-300">
               {ui.nav.projects[lang]}
             </Link>
-            <Link href={to('/sobre', lang)} className="link-underline text-ink-600 dark:text-ink-300">
+            <Link href={to('/about', lang)} className="link-underline text-ink-600 dark:text-ink-300">
               {ui.nav.about[lang]}
             </Link>
           </div>

@@ -54,7 +54,7 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }) {
   const raw = await params;
-  // generateStaticParams já restringe a pt/en; o fallback só evita render vazio.
+  // generateStaticParams already restricts to pt/en; the fallback only avoids an empty render.
   const lang: Lang = isLang(raw.lang) ? raw.lang : 'pt';
 
   const jsonLd = {

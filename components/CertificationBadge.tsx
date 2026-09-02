@@ -2,7 +2,7 @@ import { certifications, type Lang } from '@/content/site';
 import { ui } from '@/content/ui';
 import { BASE_PATH } from '@/lib/config';
 
-/** Badge oficial da certificação com brilho suave atrás. */
+/** Official certification badge with a soft glow behind it. */
 export function CertificationBadge({ lang }: { lang: Lang }) {
   const cert = certifications[0];
   return (

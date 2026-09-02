@@ -25,8 +25,8 @@ export function Nav({ lang }: { lang: Lang }) {
 
   const links = [
     { href: to('/', lang), label: ui.nav.home[lang] },
-    { href: to('/projetos', lang), label: ui.nav.projects[lang] },
-    { href: to('/sobre', lang), label: ui.nav.about[lang] },
+    { href: to('/projects', lang), label: ui.nav.projects[lang] },
+    { href: to('/about', lang), label: ui.nav.about[lang] },
   ];
 
   const isActive = (href: string) =>

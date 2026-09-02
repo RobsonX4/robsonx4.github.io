@@ -4,13 +4,13 @@ export const isLang = (v: string): v is Lang => (LANGS as readonly string[]).inc
 
 export const otherLang = (lang: Lang): Lang => (lang === 'pt' ? 'en' : 'pt');
 
-/** Monta um href já prefixado com o idioma. `to('/projetos', 'en')` → `/en/projetos`. */
+/** Builds a language-prefixed href. `to('/projects', 'en')` → `/en/projects`. */
 export const to = (path: string, lang: Lang) => {
   const clean = path === '/' ? '' : path.startsWith('/') ? path : `/${path}`;
   return `/${lang}${clean}`;
 };
 
-/** Troca o prefixo de idioma de um pathname atual, preservando o resto da rota. */
+/** Swaps the language prefix of a pathname, keeping the rest of the route. */
 export const swapLangInPath = (pathname: string, next: Lang) => {
   const parts = pathname.replace(/^\/+/, '').split('/');
   if (parts.length && isLang(parts[0])) {

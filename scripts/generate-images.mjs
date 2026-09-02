@@ -1,8 +1,8 @@
 /**
- * Gera favicon e imagens de Open Graph a partir do conteúdo do site.
+ * Generates the favicon set and Open Graph images from the site content.
  *   node scripts/generate-images.mjs
- * Saída em public/: favicon.svg, favicon-32.png, apple-touch-icon.png,
- * og-pt.png e og-en.png (1200×630).
+ * Output in public/: favicon.svg, favicon-32.png, apple-touch-icon.png,
+ * og-pt.png and og-en.png (1200×630).
  */
 import { writeFile } from 'node:fs/promises';
 import sharp from 'sharp';
@@ -15,7 +15,7 @@ const FONT = "'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-/* ícone: quadrado arredondado ink com iniciais em azul */
+/* icon: rounded ink square with the initials in brand blue */
 const icon = (size) => {
   const r = Math.round(size * 0.22);
   const fs = Math.round(size * 0.46);
@@ -27,7 +27,7 @@ const icon = (size) => {
 </svg>`;
 };
 
-/* Open Graph 1200×630 */
+/* Open Graph card, 1200×630 */
 const og = (lang) => {
   const W = 1200, H = 630;
   const name = esc(profile.name);
@@ -71,4 +71,4 @@ await writeFile('public/apple-touch-icon.png', await png(icon(180), 180, 180));
 for (const lang of ['pt', 'en']) {
   await writeFile(`public/og-${lang}.png`, await png(og(lang), 1200, 630));
 }
-console.log('[images] favicon.svg, favicon-32.png, apple-touch-icon.png, og-pt.png, og-en.png escritos em public/');
+console.log('[images] favicon.svg, favicon-32.png, apple-touch-icon.png, og-pt.png, og-en.png written to public/');

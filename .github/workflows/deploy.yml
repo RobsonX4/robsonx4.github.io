@@ -30,9 +30,9 @@ jobs:
 
       - name: Build
         env:
-          # Publicado na raiz de robsonx4.github.io, sem subdiretório.
-          # Se um dia mudar para domínio próprio, basta definir a variável
-          # de repositório SITE_URL; BASE_PATH continua vazio.
+          # Served from the root of robsonx4.github.io, no subdirectory.
+          # For a custom domain, set the SITE_URL repository variable;
+          # BASE_PATH stays empty.
           NEXT_PUBLIC_BASE_PATH: ''
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://robsonx4.github.io' }}
         run: npm run build

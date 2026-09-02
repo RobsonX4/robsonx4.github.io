@@ -1,6 +1,6 @@
 import type { L } from './site';
 
-/** Rótulos de interface (navegação, seções, botões). */
+/** Interface labels: navigation, section titles, buttons. */
 export const ui = {
   nav: {
     home: { pt: 'Início', en: 'Home' } as L,

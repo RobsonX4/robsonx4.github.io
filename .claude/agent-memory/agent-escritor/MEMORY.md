@@ -1,3 +1,0 @@
-- [Perfil profissional do Robson](user_perfil_profissional.md) — cargo, stack e os resultados já verificados que podem ser citados sem inventar
-- [Padrão de escrita, onde ler](reference_padrao_escrita.md) — usar a cópia em ~/.claude, a de Documents/Projects está bloqueada pelo macOS
-- [Reescrita do LinkedIn, ago/2026](projeto_linkedin_2026.md) — tese do posicionamento e a lista de números que ele ainda precisa levantar

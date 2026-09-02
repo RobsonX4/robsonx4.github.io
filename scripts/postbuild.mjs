@@ -1,11 +1,11 @@
 /**
- * Pós-build para publicação estática (GitHub Pages).
+ * Post-build step for static hosting (GitHub Pages).
  *
- * O site vive em /pt e /en. Como a exportação estática não tem middleware,
- * este script escreve:
- *   out/index.html  → detecta o idioma do navegador e redireciona
- *   out/404.html    → página de erro do GitHub Pages, bilíngue
- *   out/.nojekyll   → impede o Jekyll de ignorar a pasta _next
+ * The site lives under /pt and /en. Since a static export has no middleware,
+ * this script writes:
+ *   out/index.html  → detects the browser language and redirects
+ *   out/404.html    → bilingual GitHub Pages error page
+ *   out/.nojekyll   → stops Jekyll from ignoring the _next folder
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -15,7 +15,7 @@ const OUT = join(process.cwd(), 'out');
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 if (!existsSync(OUT)) {
-  console.error('[postbuild] pasta "out" não encontrada — rode "next build" antes.');
+  console.error('[postbuild] "out" folder not found. Run "next build" first.');
   process.exit(1);
 }
 
@@ -41,7 +41,7 @@ const shell = (title, body) => `<!doctype html>
 </html>
 `;
 
-// ── index.html: escolhe o idioma e redireciona ───────────────────────────────
+// ── index.html: pick the language and redirect ───────────────────────────────
 const redirect = shell(
   'Redirecionando…',
   `<div>
@@ -58,7 +58,7 @@ const redirect = shell(
 </script>`,
 );
 
-// ── 404.html: erro do GitHub Pages ───────────────────────────────────────────
+// ── 404.html: GitHub Pages error page ────────────────────────────────────────
 const notFound = shell(
   '404',
   `<div>
@@ -75,4 +75,4 @@ await writeFile(join(OUT, 'index.html'), redirect, 'utf8');
 await writeFile(join(OUT, '404.html'), notFound, 'utf8');
 await writeFile(join(OUT, '.nojekyll'), '', 'utf8');
 
-console.log(`[postbuild] index.html, 404.html e .nojekyll escritos em out/${BASE ? ` (basePath: ${BASE})` : ''}`);
+console.log(`[postbuild] index.html, 404.html and .nojekyll written to out/${BASE ? ` (basePath: ${BASE})` : ''}`);

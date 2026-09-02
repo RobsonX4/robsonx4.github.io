@@ -3,9 +3,9 @@ import type { Lang, Project } from '@/content/site';
 import { ui } from '@/content/ui';
 import { to } from '@/lib/i18n';
 
-/** Linha editorial da listagem: texto à esquerda, painel de resultados à direita. */
+/** Editorial row for the projects listing: copy on the left, results panel on the right. */
 export function ProjectRow({ project, lang, index }: { project: Project; lang: Lang; index: number }) {
-  const href = to(`/projetos/${project.slug}`, lang);
+  const href = to(`/projects/${project.slug}`, lang);
   const results = project.results.filter((r) => r.value !== '?').slice(0, 3);
   const n = String(index + 1).padStart(2, '0');
 

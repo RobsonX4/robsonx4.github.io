@@ -4,7 +4,7 @@ import { ui } from '@/content/ui';
 import { to } from '@/lib/i18n';
 
 export function ProjectCard({ project, lang, index }: { project: Project; lang: Lang; index: number }) {
-  const href = to(`/projetos/${project.slug}`, lang);
+  const href = to(`/projects/${project.slug}`, lang);
 
   return (
     <article className={`card group relative flex h-full flex-col overflow-hidden p-6 hover:border-ink-300 sm:p-8 dark:hover:border-white/20 ${project.theme.ring}`}>

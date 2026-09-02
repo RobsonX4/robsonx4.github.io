@@ -6,7 +6,7 @@ export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const routes = ['', '/projetos', '/sobre', ...projects.map((p) => `/projetos/${p.slug}`)];
+  const routes = ['', '/projects', '/about', ...projects.map((p) => `/projects/${p.slug}`)];
 
   return LANGS.flatMap((lang) =>
     routes.map((r) => ({

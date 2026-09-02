@@ -1,7 +1,7 @@
 import { education, experience, profile, type Lang } from '@/content/site';
 import { ui } from '@/content/ui';
 
-/** Ficha resumida: cargo atual, base, formação e foco. */
+/** Compact profile sheet: current role, location, education and focus. */
 export function ProfileSheet({ lang }: { lang: Lang }) {
   return (
     <dl className="divide-y divide-ink-200/70 border-y border-ink-200/70 text-sm dark:divide-white/10 dark:border-white/10">

@@ -19,7 +19,7 @@ export function ThemeToggle({ label }: { label: string }) {
     try {
       localStorage.setItem('theme', next);
     } catch {
-      /* modo privado / storage bloqueado: só não persiste */
+      /* private mode or blocked storage: the choice simply is not persisted */
     }
     setMode(next);
   };
@@ -32,7 +32,7 @@ export function ThemeToggle({ label }: { label: string }) {
       title={label}
       className="grid h-9 w-9 place-items-center rounded-full border border-ink-200 text-ink-600 transition hover:border-ink-300 hover:text-ink-900 dark:border-white/10 dark:text-ink-300 dark:hover:border-white/25 dark:hover:text-white"
     >
-      {/* sem estado no primeiro paint para não divergir da hidratação */}
+      {/* no state on first paint, so server and client markup match */}
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
         {mode === 'dark' ? (
           <circle cx="12" cy="12" r="4.2">
@@ -52,10 +52,10 @@ export function ThemeToggle({ label }: { label: string }) {
 }
 
 /**
- * Roda antes do primeiro paint:
- *  - aplica o tema salvo, evitando flash de tela clara;
- *  - marca <html class="js">, que é o que autoriza o CSS a esconder os blocos
- *    de entrada. Sem JavaScript, nada é escondido.
+ * Runs before first paint:
+ *  - applies the saved theme, avoiding a flash of light background;
+ *  - marks <html class="js">, which is what allows the CSS to hide the
+ *    reveal blocks. Without JavaScript nothing is hidden.
  */
 export const themeScript = `
 (function(){

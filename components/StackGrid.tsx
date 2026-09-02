@@ -101,7 +101,7 @@ function Card({ group, lang }: { group: SkillGroup; lang: Lang }) {
   );
 }
 
-/** Stack em cards: o grupo principal ocupa a primeira linha inteira, os demais formam a grade. */
+/** Stack as cards: the primary group takes the full first row, the rest form the grid. */
 export function StackGrid({ lang }: { lang: Lang }) {
   const primary = profile.skills.find((g) => g.primary);
   const others = profile.skills.filter((g) => !g.primary);

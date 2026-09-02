@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 /**
- * Fade-up quando o bloco entra na viewport.
+ * Fades the block up when it enters the viewport.
  *
- * O conteúdo é sempre visível por padrão; quem o esconde é a regra
- * `.js .reveal:not(.reveal-in)` em globals.css. Isso garante que, sem
- * JavaScript, nada some. E se o IntersectionObserver não disparar (aba em
- * segundo plano, navegador restritivo), um temporizador revela mesmo assim.
+ * Content is visible by default; the `.js .reveal:not(.reveal-in)` rule in
+ * globals.css is what hides it. Without JavaScript nothing disappears, and if
+ * the IntersectionObserver never fires (background tab, restrictive browser)
+ * a timer reveals the block anyway.
  */
 export function Reveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -32,7 +32,7 @@ export function Reveal({ children, delay = 0, className = '' }: { children: Reac
     );
     io.observe(el);
 
-    // Rede de segurança: nada fica invisível para sempre.
+    // Safety net: nothing stays invisible forever.
     const fallback = window.setTimeout(() => {
       setShown(true);
       io.disconnect();

@@ -27,7 +27,7 @@ export async function generateMetadata({
   };
 }
 
-/** Bloco de título de seção dentro do case. */
+/** Titled block inside a case study. */
 function Block({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <section className="border-t border-ink-200/70 py-12 first:border-t-0 sm:py-16 dark:border-white/10">
@@ -50,11 +50,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ lang: 
 
   return (
     <article>
-      {/* ── Cabeçalho do case ────────────────────────────────────────────── */}
+      {/* ── Case header ──────────────────────────────────────────────────── */}
       <header className="relative overflow-hidden border-b border-ink-200/70 dark:border-white/10">
         <div aria-hidden className={`pointer-events-none absolute inset-x-0 top-0 h-72 bg-gradient-to-b ${project.theme.from} ${project.theme.to}`} />
         <div className="container-page relative py-14 sm:py-20">
-          <Link href={to('/projetos', lang)} className="link-underline text-sm text-ink-500 dark:text-ink-400">
+          <Link href={to('/projects', lang)} className="link-underline text-sm text-ink-500 dark:text-ink-400">
             ← {ui.project.back[lang]}
           </Link>
 
@@ -119,13 +119,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ lang: 
       </header>
 
       <div className="container-page">
-        {/* ── Contexto ───────────────────────────────────────────────────── */}
+        {/* ── Context ────────────────────────────────────────────────────── */}
         <Block label={ui.project.context[lang]}>
           <p className="max-w-prose text-lg leading-relaxed text-ink-700 dark:text-ink-200">{project.summary[lang]}</p>
           <p className="prose-body mt-5 max-w-prose">{project.context[lang]}</p>
         </Block>
 
-        {/* ── Desafios ───────────────────────────────────────────────────── */}
+        {/* ── Challenges ─────────────────────────────────────────────────── */}
         <Block label={ui.project.challenges[lang]}>
           <ul className="max-w-prose space-y-4">
             {project.challenges[lang].map((c, i) => (
@@ -139,7 +139,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ lang: 
           </ul>
         </Block>
 
-        {/* ── Como foi feito ─────────────────────────────────────────────── */}
+        {/* ── Approach ───────────────────────────────────────────────────── */}
         <Block label={ui.project.approach[lang]}>
           <ol className="space-y-8">
             {project.approach.map((step, i) => (
@@ -154,7 +154,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ lang: 
           </ol>
         </Block>
 
-        {/* ── Arquitetura ────────────────────────────────────────────────── */}
+        {/* ── Architecture ───────────────────────────────────────────────── */}
         <Block label={ui.project.architecture[lang]}>
           <div className="overflow-hidden rounded-2xl border border-ink-200/80 dark:border-white/10">
             {project.architecture.map((row, i) => (
@@ -187,7 +187,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ lang: 
           </div>
         </Block>
 
-        {/* ── Resultados ─────────────────────────────────────────────────── */}
+        {/* ── Results ────────────────────────────────────────────────────── */}
         <Block label={ui.project.results[lang]}>
           <dl className="grid gap-px overflow-hidden rounded-2xl border border-ink-200/80 bg-ink-200/70 sm:grid-cols-3 dark:border-white/10 dark:bg-white/10">
             {project.results.map((r, i) => (
@@ -199,7 +199,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ lang: 
           </dl>
         </Block>
 
-        {/* ── Aprendizados ───────────────────────────────────────────────── */}
+        {/* ── Learnings ──────────────────────────────────────────────────── */}
         <Block label={ui.project.learnings[lang]}>
           <ul className="max-w-prose space-y-5">
             {project.learnings[lang].map((l, i) => (
@@ -211,10 +211,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ lang: 
         </Block>
       </div>
 
-      {/* ── Próximo projeto ──────────────────────────────────────────────── */}
+      {/* ── Next project ─────────────────────────────────────────────────── */}
       <nav className="container-page pb-4">
         <Link
-          href={to(`/projetos/${next.slug}`, lang)}
+          href={to(`/projects/${next.slug}`, lang)}
           className="card group flex items-center justify-between gap-6 p-8 hover:border-ink-300 dark:hover:border-white/20"
         >
           <span>

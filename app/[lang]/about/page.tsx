@@ -25,7 +25,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
   return (
     <>
-      {/* ── Bio + competências ───────────────────────────────────────────── */}
+      {/* ── Bio + profile sheet ──────────────────────────────────────────── */}
       <Section eyebrow={profile.role[lang]} title={ui.sections.about[lang]} className="pt-12">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-20">
           <div className="max-w-prose space-y-5">
@@ -48,7 +48,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         </div>
       </Section>
 
-      {/* ── Trajetória ───────────────────────────────────────────────────── */}
+      {/* ── Experience ───────────────────────────────────────────────────── */}
       <Section
         eyebrow={ui.sections.career[lang]}
         title={ui.sections.experience[lang]}
@@ -83,7 +83,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         </ol>
       </Section>
 
-      {/* ── Formação acadêmica e certificação ────────────────────────────── */}
+      {/* ── Education and certification ─────────────────────────────────── */}
       <Section eyebrow={ui.sections.learning[lang]} title={ui.sections.education[lang]}>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {education.map((e, i) => (

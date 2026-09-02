@@ -1,6 +1,6 @@
 import { profile, type Lang } from '@/content/site';
 
-/** Faixa de big numbers. */
+/** Key numbers strip. */
 export function Highlights({ lang, className = '' }: { lang: Lang; className?: string }) {
   return (
     <dl
