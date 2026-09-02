@@ -23,7 +23,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ lang:
 
   return (
     <Section eyebrow={ui.sections.portfolio[lang]} title={ui.project.all[lang]} subtitle={ui.project.allSub[lang]} className="pt-8">
-      <div className="space-y-6">
+      <div className="space-y-4">
         {projects.map((p, i) => (
           <Reveal key={p.slug} delay={i * 80}>
             <ProjectRow project={p} lang={lang} index={i} />
