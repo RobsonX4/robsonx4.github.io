@@ -71,7 +71,7 @@ To add a project, append an object to the `projects` array. The listing, the hom
 
 ### Provenance
 
-Profile, experience, education and the Gerencert case were confirmed against LinkedIn on 2026-08-31. The YellowJobs and Moosy cases use product facts published on yellowjobs.com.br and moosy.app (read on 2026-09-02) plus the engineering narrative provided by the author. Product screens under `public/projects/` come from those sites.
+Profile, experience and education were confirmed against LinkedIn on 2026-08-31, as were the Gerencert results. The Gerencert technical detail comes from the project's own documentation (monorepo README, per-service context files, `specs/` and `infra/`), read on 2026-09-02. The YellowJobs and Moosy cases use product facts published on yellowjobs.com.br and moosy.app plus the engineering narrative provided by the author. Product screens under `public/projects/` come from those sites.
 
 ### Generated images
 

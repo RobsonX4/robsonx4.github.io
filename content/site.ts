@@ -6,8 +6,10 @@
  *  to change the site, change this file.
  *
  *  CONTENT PROVENANCE
- *   ✔ Profile, experience, education and the Gerencert case come from
- *     LinkedIn (linkedin.com/in/robsoncsouza), as of 2026-08-31.
+ *   ✔ Profile, experience and education come from LinkedIn
+ *     (linkedin.com/in/robsoncsouza), as of 2026-08-31. The Gerencert
+ *     results come from there too; its technical detail comes from the
+ *     project's own documentation, read on 2026-09-02.
  *   ✔ YellowJobs and Moosy: product facts from yellowjobs.com.br and
  *     moosy.app (read on 2026-09-02); engineering narrative from Robson.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -291,113 +293,182 @@ export type Project = {
 
 export const projects: Project[] = [
   /* ═══════════════════════════════ Gerencert ═══════════════════════════════
-   * Content confirmed from LinkedIn.
+   * Product and results confirmed from LinkedIn; technical detail from the
+   * project's own documentation (monorepo README, per-service CLAUDE.md,
+   * specs/ and infra/), read on 2026-09-02.
    * ═════════════════════════════════════════════════════════════════════════ */
   {
     slug: 'gerencert',
     name: 'Gerencert',
-    year: '2019-2021',
+    year: '2019 →',
     status: { pt: 'Cofundador', en: 'Co-founder' },
+    url: 'https://gerencert.com',
     tagline: {
-      pt: 'SaaS de gestão de certificados digitais, comissionamento e vendas para autoridades de registro em todo o Brasil.',
-      en: 'SaaS for digital-certificate management, commissioning and sales, used by registration authorities across Brazil.',
+      pt: 'SaaS multi-tenant de venda, emissão e gestão de certificados digitais para autoridades de registro em todo o Brasil.',
+      en: 'Multi-tenant SaaS for selling, issuing and managing digital certificates, used by registration authorities across Brazil.',
     },
     summary: {
-      pt: 'O Gerencert nasceu de um gargalo muito concreto: emitir um certificado digital envolve conferência de documento, agendamento, videoconferência de validação, cobrança e comissionamento. Nas autoridades de registro isso era feito em planilha, sistema de terceiro e WhatsApp. Cada atendimento de venda levava cerca de 8 minutos. A plataforma reorganizou esse fluxo inteiro e derrubou o tempo para 40 segundos.',
-      en: 'Gerencert came out of a very concrete bottleneck: issuing a digital certificate involves document checks, scheduling, a validation video call, billing and commissioning. At registration authorities all of that ran on spreadsheets, third-party systems and WhatsApp. Each sales interaction took around 8 minutes. The platform reorganized the whole flow and cut that to 40 seconds.',
+      pt: 'Emitir um certificado digital envolve conferência de documento, consulta ao SPC, agendamento, videoconferência de validação, cobrança e comissionamento do parceiro. Nas autoridades de registro isso era feito em planilha, sistema de terceiro e WhatsApp, e cada atendimento de venda levava cerca de 8 minutos. O Gerencert reorganizou o fluxo inteiro e derrubou o tempo para 40 segundos. O produto começou como um MVP em 2019 e continua em evolução: hoje são sete serviços em produção sobre uma fundação de infraestrutura em Terraform, com observabilidade, métricas de negócio e um fluxo de desenvolvimento conduzido por especificações e agentes de IA.',
+      en: 'Issuing a digital certificate involves document checks, a credit-bureau lookup, scheduling, a validation video call, billing and partner commissioning. At registration authorities all of that ran on spreadsheets, third-party systems and WhatsApp, and each sales interaction took around 8 minutes. Gerencert reorganized the whole flow and cut that to 40 seconds. The product started as an MVP in 2019 and keeps evolving: today it is seven services in production on a Terraform infrastructure foundation, with observability, business metrics and a development flow driven by specifications and AI agents.',
     },
     role: {
-      pt: 'Cofundador, arquitetura e desenvolvimento full-stack',
-      en: 'Co-founder, architecture and full-stack development',
+      pt: 'Cofundador, arquitetura, desenvolvimento full-stack e infraestrutura',
+      en: 'Co-founder, architecture, full-stack development and infrastructure',
     },
-    tags: ['Node.js', 'AngularJS', 'MongoDB', 'Microserviços', 'AWS', 'Docker'],
+    tags: ['Node.js', 'AngularJS', 'MongoDB', 'AWS', 'Terraform', 'Claude Code'],
     theme: { from: 'from-emerald-400/20', to: 'to-teal-500/5', ring: 'ring-emerald-400/30' },
+    screenshots: [
+      { src: '/projects/gerencert/dashboard.webp', cover: true, alt: { pt: 'Painel geral do Gerencert com os atendimentos do dia e o gráfico de certificados cadastrados', en: 'Gerencert dashboard with the day’s appointments and a chart of registered certificates' } },
+      { src: '/projects/gerencert/issuance.webp', alt: { pt: 'Fluxo de emissão de certificado: consulta, pagamento, agendamento e resumo', en: 'Certificate issuance flow: lookup, payment, scheduling and summary' } },
+      { src: '/projects/gerencert/landing.webp', alt: { pt: 'Site do Gerencert, sistema para autoridades de registro', en: 'Gerencert website, a system for registration authorities' } },
+    ],
     context: {
-      pt: 'Autoridades de registro são as empresas que, credenciadas por uma autoridade certificadora, fazem o atendimento presencial ou por vídeo para emitir certificados digitais. O negócio delas é volume de atendimento e rede de parceiros, e as duas coisas estavam sem software. O controle de venda ficava em planilha, a comissão do parceiro era calculada à mão e o histórico do cliente se perdia entre sistemas.',
-      en: 'Registration authorities are the companies accredited by a certificate authority to run the in-person or video sessions that issue digital certificates. Their business is interaction volume and a partner network, and neither had software behind it. Sales tracking lived in spreadsheets, partner commissions were computed by hand, and customer history was scattered across systems.',
+      pt: 'Autoridades de registro são as empresas credenciadas por uma autoridade certificadora para fazer o atendimento, presencial ou por vídeo, que emite certificados digitais. O negócio delas é volume de atendimento e rede de parceiros, e as duas coisas estavam sem software. O controle de venda ficava em planilha, a comissão do parceiro era calculada à mão e o histórico do cliente se perdia entre sistemas. O Gerencert é multi-tenant desde a base: cada empresa tem seus pontos de atendimento, e praticamente todo registro carrega a empresa e o ponto que o criou. Sobre esse modelo vieram emissão, agenda, financeiro, comissionamento, controle de vencimento e um widget de venda que os parceiros embarcam no próprio site.',
+      en: 'Registration authorities are the companies accredited by a certificate authority to run the in-person or video sessions that issue digital certificates. Their business is interaction volume and a partner network, and neither had software behind it. Sales tracking lived in spreadsheets, partner commissions were computed by hand, and customer history was scattered across systems. Gerencert is multi-tenant from the ground up: each company has its own service points, and virtually every record carries the company and the point that created it. On top of that model came issuance, scheduling, finance, commissioning, expiry control and a sales widget that partners embed on their own sites.',
     },
     challenges: {
       pt: [
         'Encurtar drasticamente o atendimento de venda sem perder nenhum dado exigido pelo processo de emissão.',
-        'Calcular comissionamento de uma rede de parceiros de forma automática e auditável.',
-        'Cobrar de verdade: pagamento recorrente integrado a múltiplos gateways brasileiros, cada um com sua própria idiossincrasia.',
-        'Evoluir o MVP para uma arquitetura que suportasse crescimento nacional, sem parar a operação de quem já usava.',
-        'Manter e operar toda a infraestrutura com um time de fundadores, sem equipe dedicada de infra.',
+        'Calcular comissionamento de uma rede de parceiros de forma automática e auditável, com isolamento por empresa e ponto de atendimento.',
+        'Cobrar de verdade: pagamento por múltiplos gateways brasileiros, cada um com sua idiossincrasia, e depois assinatura recorrente do próprio SaaS.',
+        'Sair de um servidor EC2 com deploy por SSH para uma infraestrutura descrita em código, sem parar a operação de quem já usava.',
+        'Enxergar o negócio: métricas de produto e KPIs de SaaS sem montar um pipeline de dados nem pagar por ingestão de métricas.',
+        'Manter e evoluir sete serviços, incluindo um front-end em AngularJS, com um time de fundadores e sem equipe dedicada de infraestrutura.',
       ],
       en: [
-        'Drastically shorten the sales interaction without losing any data the issuing process requires.',
-        'Compute partner-network commissions automatically and auditably.',
-        'Actually charge customers: recurring payments across multiple Brazilian gateways, each with its own quirks.',
-        'Grow the MVP into an architecture that could support nationwide usage without disrupting existing customers.',
-        'Run the whole infrastructure with a founding team, without a dedicated infra squad.',
+        'Cutting sales handling time drastically without losing any data the issuance process requires.',
+        'Computing partner-network commissions automatically and auditably, isolated per company and service point.',
+        'Actually collecting money: payments through several Brazilian gateways, each with its own quirks, and later recurring subscriptions for the SaaS itself.',
+        'Moving from an EC2 box deployed over SSH to infrastructure described as code, without stopping the operation already running on it.',
+        'Seeing the business: product metrics and SaaS KPIs without building a data pipeline or paying for metric ingestion.',
+        'Maintaining and evolving seven services, including an AngularJS front-end, with a founding team and no dedicated infrastructure crew.',
       ],
     },
     approach: [
       {
-        title: { pt: 'MVP primeiro, arquitetura depois', en: 'MVP first, architecture later' },
+        title: { pt: 'Tirar o atendimento da planilha', en: 'Getting the process out of the spreadsheet' },
         body: {
-          pt: 'A primeira versão foi deliberadamente simples: AngularJS, Node.js e MongoDB, monolito, entregue rápido para validar com autoridades de registro reais. Só depois que o fluxo provou valor é que investimos em decomposição. A ordem inversa teria custado meses antes da primeira venda.',
-          en: 'The first version was deliberately simple: AngularJS, Node.js and MongoDB, a monolith, shipped fast to validate with real registration authorities. Only once the flow had proven its value did we invest in decomposition. The reverse order would have cost months before the first sale.',
+          pt: 'O ganho de 8 minutos para 40 segundos não veio de otimizar código. Veio de juntar em uma tela o que estava espalhado: consulta ao SPC, dados do titular, escolha do produto, pagamento, agendamento e resumo, nessa ordem, com o que já é conhecido preenchido. O atendente deixou de alternar entre planilha, sistema da certificadora e WhatsApp. Cada etapa do fluxo virou uma aba do mesmo formulário, e o que antes era retrabalho passou a ser confirmação.',
+          en: 'Going from 8 minutes to 40 seconds did not come from optimizing code. It came from pulling into one screen what was scattered: credit-bureau lookup, holder details, product choice, payment, scheduling and summary, in that order, with everything already known pre-filled. The agent stopped switching between a spreadsheet, the certificate authority’s system and WhatsApp. Each step of the flow became a tab in the same form, and what used to be rework became confirmation.',
         },
       },
       {
-        title: { pt: 'Redesenho do atendimento: 8 minutos → 40 segundos', en: 'Redesigning the interaction: 8 minutes → 40 seconds' },
+        title: { pt: 'Sete serviços que só se falam por HTTP', en: 'Seven services that only talk over HTTP' },
         body: {
-          pt: 'O ganho veio de cortar passos do processo: dados do cliente puxados uma vez e reaproveitados, formulário reduzido ao que a emissão realmente exige, seleção de produto e cobrança na mesma tela, e comissionamento calculado como consequência da venda em vez de tarefa separada. Menos de um minuto por atendimento, contra oito.',
-          en: 'The gain came from removing steps: customer data pulled once and reused, the form trimmed to what issuance actually requires, product selection and billing on the same screen, and commissioning computed as a consequence of the sale rather than a separate chore. Under a minute per interaction, against eight.',
+          pt: 'O sistema é um monorepo com sete peças: a aplicação web usada pelas autoridades de registro, a API principal, a API e o iframe do widget de venda embarcado em sites de parceiros, a API de pagamentos e assinaturas, o portal de agenda online e as funções de emissão. A regra que mais protegeu o projeto foi simples: nenhum serviço lê o banco do outro, toda comunicação passa por HTTP. Isso permitiu evoluir o widget e o pagamento sem tocar no núcleo, e é o que torna possível trocar uma peça de cada vez.',
+          en: 'The system is a monorepo with seven pieces: the web app used by registration authorities, the main API, the API and iframe of the sales widget partners embed on their sites, the payments and subscriptions API, the online scheduling portal and the issuance functions. The rule that protected the project most was simple: no service reads another’s database, all communication goes over HTTP. That made it possible to evolve the widget and payments without touching the core, and it is what lets one piece be replaced at a time.',
         },
       },
       {
-        title: { pt: 'Pagamentos integrados a múltiplos gateways', en: 'Payments across multiple gateways' },
+        title: { pt: 'Pagamento, assinatura e a rede de parceiros', en: 'Payments, subscriptions and the partner network' },
         body: {
-          pt: 'Construí os serviços de pagamento com suporte a cobrança recorrente e a mais de um gateway brasileiro, atrás de uma interface única. Isso deu poder de negociação comercial e resiliência: gateway instável deixou de ser incidente de produto.',
-          en: 'I built the payment services with recurring billing and support for more than one Brazilian gateway behind a single interface. That gave commercial negotiating power and resilience: an unstable gateway stopped being a product incident.',
+          pt: 'A cobrança do certificado passa por uma camada que abstrai o gateway, porque cada autoridade de registro chega com o seu: Iugu, iPag, Granito, Safe2Pay. A empresa escolhe, e o roteamento é dela. Depois veio a cobrança do próprio SaaS: assinatura recorrente por cartão e boleto, com webhooks de cobrança e de pró-rata, carência para boleto não pago e uma verificação de assinatura em cada requisição, com cache curto para não pesar. O comissionamento do parceiro é calculado a partir da venda, sem planilha no meio.',
+          en: 'Certificate billing goes through a layer that abstracts the gateway, because every registration authority arrives with a different one: Iugu, iPag, Granito, Safe2Pay. The company picks, and routing is theirs. Then came billing for the SaaS itself: recurring subscriptions by card and bank slip, with charge and pro-rata webhooks, a grace period for unpaid slips and a subscription check on every request, cached briefly so it stays cheap. Partner commission is computed from the sale, with no spreadsheet in between.',
         },
       },
       {
-        title: { pt: 'Migração para microserviços com foco em resiliência', en: 'Move to microservices, aimed at resilience' },
+        title: { pt: 'Do EC2 para uma fundação em Terraform', en: 'From an EC2 box to a Terraform foundation' },
         body: {
-          pt: 'Com tração, a plataforma foi decomposta em serviços por domínio (cadastro, vendas, comissionamento, pagamentos), isolando falha e permitindo escalar apenas o que precisava. A decomposição foi incremental, serviço a serviço, com a operação rodando o tempo todo.',
-          en: 'With traction, the platform was decomposed into domain services (accounts, sales, commissioning, payments), isolating failure and letting us scale only what needed it. The decomposition was incremental, one service at a time, with the operation running throughout.',
+          pt: 'O sistema nasceu em um servidor EC2 com deploy por SSH. A migração foi feita como uma fundação compartilhada descrita em Terraform: VPC com sub-redes públicas e privadas em duas zonas, saída por uma instância NAT pequena com IP fixo, cluster ECS, balanceador interno único com um alvo por serviço, API Gateway por serviço com domínio próprio e parâmetros no SSM. Os front-ends foram para S3 servido por CloudFront. Cada serviço tem seus próprios módulos por cima da fundação, e nada é criado à mão no console. A troca de DNS do servidor antigo para o CDN levou poucos segundos de indisponibilidade.',
+          en: 'The system started on an EC2 box deployed over SSH. The migration was done as a shared foundation described in Terraform: a VPC with public and private subnets across two zones, egress through a small NAT instance with a fixed IP, an ECS cluster, a single internal load balancer with one target per service, an API Gateway per service with its own domain, and parameters in SSM. Front-ends moved to S3 served by CloudFront. Each service has its own modules on top of the foundation, and nothing is created by hand in the console. Switching DNS from the old server to the CDN cost a couple of seconds of downtime.',
         },
       },
       {
-        title: { pt: 'Infra e segurança tocadas pelos fundadores', en: 'Infra and security run by the founders' },
+        title: { pt: 'Ambientes enxutos e conta previsível', en: 'Lean environments, predictable bill' },
         body: {
-          pt: 'Toda a nuvem foi gerenciada por nós: Docker para padronizar o runtime, EC2 e Lambda para execução, S3 e CloudFront para entrega de arquivo e front-end, e Cloudflare na borda para TLS, cache e proteção. Simples o bastante para ser operado por quem também escrevia o produto.',
-          en: 'We ran the entire cloud ourselves: Docker to standardize the runtime, EC2 and Lambda for execution, S3 and CloudFront for file and front-end delivery, and Cloudflare at the edge for TLS, caching and protection. Simple enough to be operated by the same people writing the product.',
+          pt: 'São dois ambientes com a mesma descrição e parâmetros diferentes: desenvolvimento usa capacidade spot e uma tarefa por serviço; produção usa capacidade sob demanda e escala até três. Trocar o gateway NAT gerenciado por uma instância pequena e usar spot no ambiente de desenvolvimento derrubou a maior parte do custo fixo. A conta de produção fica na casa de algumas dezenas de dólares por mês, o que para um SaaS tocado por fundadores é a diferença entre continuar e parar.',
+          en: 'There are two environments with the same description and different parameters: development uses spot capacity and one task per service; production uses on-demand capacity and scales to three. Swapping the managed NAT gateway for a small instance and using spot in development removed most of the fixed cost. The production bill sits in the low tens of dollars a month, which for a founder-run SaaS is the difference between continuing and stopping.',
+        },
+      },
+      {
+        title: { pt: 'Um painel que não custa ingestão', en: 'A dashboard with no ingestion cost' },
+        body: {
+          pt: 'A observabilidade foi montada sem pipeline de dados e sem pagar por ingestão: o painel consulta as fontes na hora de abrir. As métricas de negócio vêm de endpoints da própria API, protegidos por um token de serviço, que calculam sobre as coleções existentes. As métricas de sistema vêm direto do CloudWatch, com requisições por segundo, erros e latência por serviço. Os logs são uma linha estruturada por requisição, consultadas no próprio CloudWatch. O custo da nuvem entra no mesmo painel, lido do Cost Explorer com cache de doze horas.',
+          en: 'Observability was built with no data pipeline and no ingestion bill: the dashboard queries the sources when it is opened. Business metrics come from the API’s own endpoints, protected by a service token, computing over the existing collections. System metrics come straight from CloudWatch, with requests per second, errors and latency per service. Logs are one structured line per request, queried in CloudWatch itself. Cloud cost lands on the same dashboard, read from Cost Explorer with a twelve-hour cache.',
+        },
+      },
+      {
+        title: { pt: 'Métricas de negócio, não só de servidor', en: 'Business metrics, not just server metrics' },
+        body: {
+          pt: 'Além de saúde de aplicação, o painel calcula os indicadores que dizem se o SaaS está de pé: receita recorrente mensal e anual, receita nova líquida, ticket médio por conta, clientes ativos e novos, evasão de clientes e de receita, retenção líquida, custo de aquisição, valor do cliente ao longo do tempo e queima de caixa. Tudo derivado das coleções de usuários, acessos, certificados, faturas e assinaturas, sem tabela paralela. É esse painel que orienta a decisão do que construir em seguida.',
+          en: 'Beyond application health, the dashboard computes the indicators that tell whether the SaaS is standing: monthly and annual recurring revenue, net new revenue, average revenue per account, active and new customers, customer and revenue churn, net retention, acquisition cost, lifetime value and burn rate. All derived from the existing users, access-log, certificates, invoices and subscriptions collections, with no parallel table. That dashboard is what guides the decision of what to build next.',
+        },
+      },
+      {
+        title: { pt: 'Rastrear a venda até a origem', en: 'Tracing a sale back to its origin' },
+        body: {
+          pt: 'O widget que os parceiros embarcam captura o identificador de campanha da URL, guarda por noventa dias no navegador e o propaga até o certificado emitido. A partir daí, três eventos de funil são reportados à plataforma de anúncios: lead registrado, pedido criado e pagamento aprovado, com configuração por ponto de atendimento e proteção contra duplicidade. O reporte é assíncrono, então não entra no caminho crítico da venda e não atrasa o atendimento.',
+          en: 'The widget partners embed captures the campaign identifier from the URL, keeps it in the browser for ninety days and carries it through to the issued certificate. From there, three funnel events are reported to the ad platform: lead registered, order created and payment approved, configured per service point and protected against duplicates. Reporting is asynchronous, so it stays off the critical path of the sale and never slows the interaction.',
+        },
+      },
+      {
+        title: { pt: 'Entrega com teste como pré-requisito', en: 'Delivery with tests as a prerequisite' },
+        body: {
+          pt: 'Cada serviço tem seu próprio pipeline, e o que muda define o que roda: mudou infraestrutura, aplica Terraform; mudou aplicação, constrói a imagem e atualiza o serviço; mudou front-end, sincroniza com o bucket e invalida o CDN. A branch de desenvolvimento publica em desenvolvimento, a principal publica em produção. As APIs têm testes de integração contra banco real, com e-mail, gateways e emissão isolados, e o trabalho de teste é pré-requisito tanto para abrir o pedido de merge quanto para publicar. Um hook de git bloqueia envio direto para as branches protegidas.',
+          en: 'Each service has its own pipeline, and what changed decides what runs: infrastructure changed, apply Terraform; application changed, build the image and update the service; front-end changed, sync the bucket and invalidate the CDN. The development branch publishes to development, the main branch to production. The APIs have integration tests against a real database, with e-mail, gateways and issuance stubbed, and the test job is a prerequisite both for opening the merge request and for publishing. A git hook blocks direct pushes to protected branches.',
+        },
+      },
+      {
+        title: { pt: 'Especificação como contrato de trabalho', en: 'The spec as the working contract' },
+        body: {
+          pt: 'A partir de 2026 o projeto passou a ser conduzido por Spec-Driven Development com o Claude Code. Cada demanda vira uma especificação numerada com histórias priorizadas, cenários de aceite, requisitos funcionais, critérios de sucesso mensuráveis e uma seção de dúvidas resolvidas com data. Dela saem o plano técnico, a pesquisa, o modelo de dados e a lista de tarefas. O que guia tudo é uma constituição do projeto, versionada e emendada, com cinco princípios: isolamento entre serviços, stack fixa, infraestrutura só como código, ambiente local em contêiner e regras de credencial. Antes de implementar, o plano é conferido item a item contra essa constituição.',
+          en: 'From 2026 on, the project has been run with Spec-Driven Development using Claude Code. Every demand becomes a numbered specification with prioritized stories, acceptance scenarios, functional requirements, measurable success criteria and a dated section of resolved questions. From it come the technical plan, the research, the data model and the task list. Everything is guided by a project constitution, versioned and amended, with five principles: service isolation, a fixed stack, infrastructure only as code, containerized local development and credential rules. Before implementation, the plan is checked item by item against that constitution.',
+        },
+      },
+      {
+        title: { pt: 'Agentes com especialidade e memória', en: 'Agents with a specialty and a memory' },
+        body: {
+          pt: 'O trabalho é distribuído entre subagentes especializados. Um analista de produto recebe a demanda vaga, faz poucas perguntas, escreve a especificação e decompõe em tarefas independentes. A partir dele entram o agente de back-end em Node.js, o de front-end em AngularJS, o de DevOps, o de qualidade, o de mobile e o de páginas de captação. Cada um carrega as convenções da sua área e um arquivo de contexto do serviço em que vai mexer, além de uma seção com a realidade do Gerencert que sobrepõe o guia genérico. Alguns mantêm memória entre sessões, então uma decisão de infraestrutura tomada em julho continua valendo em setembro sem que eu precise repetir.',
+          en: 'The work is distributed across specialized subagents. A product analyst takes the vague request, asks few questions, writes the specification and breaks it into independent tasks. From there come the Node.js back-end agent, the AngularJS front-end agent, the DevOps agent, the quality agent, the mobile agent and the landing-page agent. Each carries the conventions of its area and a context file for the service it will touch, plus a section with the reality of Gerencert that overrides the generic guide. Some keep memory across sessions, so an infrastructure decision made in July still holds in September without me repeating it.',
+        },
+      },
+      {
+        title: { pt: 'O que a IA não decide', en: 'What the AI does not decide' },
+        body: {
+          pt: 'O fluxo automatiza a rotina em volta do código: cria a branch da feature, comita entre as etapas, transforma tarefas em issues. O que ficou explicitamente fora foi o merge. Uma emenda da constituição proibiu merge automatizado, e as regras de permissão do próprio agente negam os comandos que enviam ou integram código. A decisão de subir para produção continua sendo humana, e essa fronteira é o que torna o resto confortável de automatizar.',
+          en: 'The flow automates the routine around the code: it creates the feature branch, commits between steps, turns tasks into issues. What was explicitly left out is the merge. A constitution amendment banned automated merges, and the agent’s own permission rules deny the commands that push or integrate code. The decision to ship to production stays human, and that boundary is what makes the rest comfortable to automate.',
         },
       },
     ],
     architecture: [
-      { layer: { pt: 'Front-end', en: 'Front-end' }, detail: { pt: 'SPA em AngularJS servida por S3 + CloudFront, com o fluxo de atendimento em tela única.', en: 'AngularJS SPA served from S3 + CloudFront, with the sales flow on a single screen.' } },
-      { layer: { pt: 'Serviços', en: 'Services' }, detail: { pt: 'Microserviços Node.js por domínio: cadastro, vendas, comissionamento e pagamentos.', en: 'Node.js microservices by domain: accounts, sales, commissioning and payments.' } },
-      { layer: { pt: 'Pagamentos', en: 'Payments' }, detail: { pt: 'Camada de abstração sobre múltiplos gateways brasileiros, com cobrança recorrente.', en: 'Abstraction layer over multiple Brazilian gateways, with recurring billing.' } },
-      { layer: { pt: 'Dados', en: 'Data' }, detail: { pt: 'MongoDB como armazenamento principal e Redis para cache e sessão.', en: 'MongoDB as primary storage and Redis for cache and sessions.' } },
-      { layer: { pt: 'Infra', en: 'Infra' }, detail: { pt: 'Docker, AWS (EC2, Lambda, S3, CloudFront) e Cloudflare na borda para TLS e proteção.', en: 'Docker, AWS (EC2, Lambda, S3, CloudFront) and Cloudflare at the edge for TLS and protection.' } },
+      { layer: { pt: 'Aplicação web', en: 'Web application' }, detail: { pt: 'Front-end em AngularJS empacotado com Webpack, hospedado em S3 e servido por CloudFront. Perfis de acesso por empresa e ponto de atendimento.', en: 'AngularJS front-end bundled with Webpack, hosted on S3 and served by CloudFront. Access profiles per company and service point.' } },
+      { layer: { pt: 'API principal', en: 'Main API' }, detail: { pt: 'Koa.js com Mongoose e autenticação por token. Certificados, clientes, agenda, financeiro, comissões, vencimentos e os endpoints de métricas.', en: 'Koa.js with Mongoose and token authentication. Certificates, customers, scheduling, finance, commissions, expiry control and the metrics endpoints.' } },
+      { layer: { pt: 'Widget de venda', en: 'Sales widget' }, detail: { pt: 'Script embarcado no site do parceiro, iframe de atendimento e API própria com cache em Redis. Captura e propaga a origem da campanha.', en: 'Script embedded on the partner’s site, an iframe for the interaction and its own API with a Redis cache. Captures and carries the campaign origin.' } },
+      { layer: { pt: 'Pagamentos e assinaturas', en: 'Payments and subscriptions' }, detail: { pt: 'Serviço em Hapi.js com validação de esquema. Roteia por gateway escolhido pela empresa e trata os webhooks de cobrança recorrente e pró-rata.', en: 'Hapi.js service with schema validation. Routes by the gateway the company picked and handles recurring-charge and pro-rata webhooks.' } },
+      { layer: { pt: 'Emissão e agenda', en: 'Issuance and scheduling' }, detail: { pt: 'Funções serverless para a emissão junto à certificadora e ao birô de crédito. Portal de agenda online com integração ao Google Calendar por ponto de atendimento.', en: 'Serverless functions for issuance with the certificate authority and the credit bureau. An online scheduling portal integrated with Google Calendar per service point.' } },
+      { layer: { pt: 'Dados', en: 'Data' }, detail: { pt: 'MongoDB gerenciado, com índices desenhados para os relatórios pesados e compressão na conexão. Redis para o cache do widget.', en: 'Managed MongoDB, with indexes designed for the heavy reports and connection compression. Redis for the widget cache.' } },
+      { layer: { pt: 'Fundação de infraestrutura', en: 'Infrastructure foundation' }, detail: { pt: 'Terraform: VPC em duas zonas, instância NAT, cluster ECS, balanceador interno, API Gateway por serviço, parâmetros no SSM e certificado curinga.', en: 'Terraform: VPC across two zones, NAT instance, ECS cluster, internal load balancer, API Gateway per service, SSM parameters and a wildcard certificate.' } },
+      { layer: { pt: 'Entrega e operação', en: 'Delivery and operations' }, detail: { pt: 'Pipeline por serviço com testes de integração obrigatórios. Painel único no Grafana com métricas de negócio, sistema, custo e logs, tudo consultado na hora.', en: 'One pipeline per service with mandatory integration tests. A single Grafana dashboard with business, system, cost and log data, all queried on read.' } },
     ],
     stack: [
-      { group: { pt: 'Front-end', en: 'Front-end' }, items: ['AngularJS', 'JavaScript', 'HTML/CSS'] },
-      { group: { pt: 'Back-end', en: 'Back-end' }, items: ['Node.js', 'MongoDB', 'Redis', 'Microserviços'] },
-      { group: { pt: 'Infra', en: 'Infra' }, items: ['Docker', 'AWS EC2', 'AWS Lambda', 'S3', 'CloudFront', 'Cloudflare'] },
+      { group: { pt: 'Front-end', en: 'Front-end' }, items: ['AngularJS', 'Webpack', 'JavaScript', 'HTML/CSS'] },
+      { group: { pt: 'Back-end', en: 'Back-end' }, items: ['Node.js', 'Koa.js', 'Hapi.js', 'MongoDB', 'Redis', 'AWS Lambda'] },
+      { group: { pt: 'Infra', en: 'Infra' }, items: ['AWS', 'Terraform', 'ECS Fargate', 'API Gateway', 'S3', 'CloudFront', 'Cloudflare'] },
+      { group: { pt: 'Operação', en: 'Operations' }, items: ['Grafana', 'CloudWatch', 'Cost Explorer', 'GitHub Actions', 'Jest'] },
+      { group: { pt: 'Integrações', en: 'Integrations' }, items: ['Gateways de pagamento', 'Google Calendar', 'Google Ads', 'SendGrid'] },
+      { group: { pt: 'Método', en: 'Method' }, items: ['Spec-Driven Development', 'Claude Code', 'Subagentes especializados'] },
     ],
     results: [
       { value: '40s', label: { pt: 'de atendimento de venda, contra 8 minutos antes', en: 'per sales interaction, down from 8 minutes' } },
       { value: '~92%', label: { pt: 'de ganho de eficiência na operação de vendas', en: 'efficiency gain in the sales operation' } },
-      { value: 'Brasil', label: { pt: 'autoridades de registro atendidas em todo o país', en: 'registration authorities served nationwide' } },
+      { value: '7', label: { pt: 'serviços em produção sobre uma fundação em Terraform', en: 'services in production on a Terraform foundation' } },
     ],
     learnings: {
       pt: [
-        'Ganho de eficiência quase nunca está no código. Estava em remover passos do processo, não em otimizar o que já existia.',
-        'Monolito primeiro foi a decisão certa. Microserviço antes de tração é custo de operação sem receita para pagá-lo.',
-        'Integração de pagamento precisa de abstração desde o primeiro gateway, porque o segundo sempre chega, e chega com pressa.',
-        'Decompor com a operação rodando só funciona se cada corte tiver caminho de volta. Sem rollback por serviço, migração de arquitetura vira aposta.',
+        'Ganho de eficiência quase nunca está no código. O nosso veio de tirar etapas do processo, não de otimizar o que já existia.',
+        'Monolito primeiro foi a decisão certa. Separar em serviços antes de haver tração é custo operacional sem receita que o pague.',
+        'Integração de pagamento precisa de abstração desde o primeiro gateway, porque o segundo sempre chega, e sempre chega com pressa.',
+        'Painel que calcula na hora de abrir resolveu observabilidade sem pipeline de dados nem conta de ingestão. Para um SaaS pequeno, é a escolha que cabe.',
+        'Especificar antes de implementar foi o que tornou os agentes de IA úteis em um sistema com sete anos de história. Sem spec, o agente acerta o arquivo e erra a regra.',
+        'Automatizar tudo em volta do código e deixar o merge com uma pessoa foi o limite que me deixou confortável para acelerar o resto.',
       ],
       en: [
         'Efficiency gains are almost never in the code. Ours came from removing process steps, not from optimizing what was already there.',
-        'Monolith first was the right call. Microservices before traction is operational cost with no revenue to pay for it.',
+        'Monolith first was the right call. Splitting into services before traction is operational cost with no revenue to pay for it.',
         'Payment integration needs an abstraction from the very first gateway, because the second one always arrives, and it always arrives in a hurry.',
-        'Decomposing while the operation runs only works if every cut has a way back. With no per-service rollback, an architecture migration is a bet.',
+        'A dashboard that computes on read solved observability with no data pipeline and no ingestion bill. For a small SaaS, that is the choice that fits.',
+        'Specifying before implementing is what made AI agents useful in a system with seven years of history. Without a spec, the agent gets the file right and the rule wrong.',
+        'Automating everything around the code and leaving the merge to a person was the boundary that made me comfortable accelerating the rest.',
       ],
     },
   },
