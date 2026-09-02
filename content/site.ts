@@ -374,13 +374,6 @@ export const projects: Project[] = [
         },
       },
       {
-        title: { pt: 'Ambientes enxutos e conta previsível', en: 'Lean environments, predictable bill' },
-        body: {
-          pt: 'São dois ambientes com a mesma descrição e parâmetros diferentes: desenvolvimento usa capacidade spot e uma tarefa por serviço; produção usa capacidade sob demanda e escala até três. Trocar o gateway NAT gerenciado por uma instância pequena e usar spot no ambiente de desenvolvimento derrubou a maior parte do custo fixo. A conta de produção fica na casa de algumas dezenas de dólares por mês, o que para um SaaS tocado por fundadores é a diferença entre continuar e parar.',
-          en: 'There are two environments with the same description and different parameters: development uses spot capacity and one task per service; production uses on-demand capacity and scales to three. Swapping the managed NAT gateway for a small instance and using spot in development removed most of the fixed cost. The production bill sits in the low tens of dollars a month, which for a founder-run SaaS is the difference between continuing and stopping.',
-        },
-      },
-      {
         title: { pt: 'Um painel que não custa ingestão', en: 'A dashboard with no ingestion cost' },
         body: {
           pt: 'A observabilidade foi montada sem pipeline de dados e sem pagar por ingestão: o painel consulta as fontes na hora de abrir. As métricas de negócio vêm de endpoints da própria API, protegidos por um token de serviço, que calculam sobre as coleções existentes. As métricas de sistema vêm direto do CloudWatch, com requisições por segundo, erros e latência por serviço. Os logs são uma linha estruturada por requisição, consultadas no próprio CloudWatch. O custo da nuvem entra no mesmo painel, lido do Cost Explorer com cache de doze horas.',
