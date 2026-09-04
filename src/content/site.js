@@ -542,7 +542,7 @@ export const projects = [
       { group: { pt: 'Método', en: 'Method' }, items: ['Spec-Driven Development', 'Multiagentes', 'Claude Code'] },
     ],
     results: [
-      { value: '0', label: { pt: 'senhas de sites de vagas passando pelo servidor', en: 'job-site passwords passing through the server' } },
+      { value: '3', label: { pt: 'funcionalidades no ar: análise do perfil do LinkedIn, busca de vagas e candidatura automática', en: 'features in production: LinkedIn profile analysis, job search and automatic application' } },
       { value: '50', label: { pt: 'candidaturas grátis no primeiro lote, sem cartão', en: 'free applications in the first batch, no card required' } },
       { value: 'S3 + CloudFront', label: { pt: 'hospedagem estática do front-end e da landing page', en: 'static hosting for the front-end and landing page' } },
     ],
